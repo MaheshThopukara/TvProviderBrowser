@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.androidx.navigation.safeargs.kotlin)
 }
 
-val signingStorePath = (project.findProperty("signingStoreFile") as String?) ?: "dummy.jks"
+val signingStorePath = (project.findProperty("signingStoreFile") as String?) ?: "platform.jks"
 val signingStorePassword = (project.findProperty("signingStorePassword") as String?) ?: "android"
 val signingKeyAlias = (project.findProperty("signingKeyAlias") as String?) ?: "android"
 val signingKeyPassword = (project.findProperty("signingKeyPassword") as String?) ?: signingStorePassword
@@ -20,7 +20,7 @@ android {
     }
 
     signingConfigs {
-        create("dummy") {
+        create("release") {
             storeFile = rootProject.file(signingStorePath)
             storePassword = signingStorePassword
             keyAlias = signingKeyAlias
@@ -44,10 +44,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("dummy")
+            signingConfig = signingConfigs.getByName("release")
         }
         debug {
-            signingConfig = signingConfigs.getByName("dummy")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

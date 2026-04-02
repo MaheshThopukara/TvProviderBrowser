@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TvProvider Browser — Premium Icon Concepts</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0A0A0F; color: #E6E1E5; font-family: 'Inter', system-ui, sans-serif; padding: 0; }
+
+  header { text-align: center; padding: 48px 40px 20px; }
+  header h1 { font-size: 28px; color: #A8C7FA; font-weight: 800; }
+  header p { color: #504d56; font-size: 13px; margin-top: 6px; }
+
+  /* ── Launcher Mockup ── */
+  .launcher-section { padding: 32px 40px 48px; }
+  .launcher-section h2 { text-align: center; font-size: 14px; color: #79747E; margin-bottom: 20px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; }
+  .launcher-bg {
+    background: linear-gradient(180deg, #0F1923 0%, #0A0F18 100%);
+    border-radius: 20px; padding: 40px 48px;
+    border: 1px solid rgba(255,255,255,0.04);
+    max-width: 1100px; margin: 0 auto;
+  }
+  .launcher-row { display: flex; gap: 28px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .launcher-icon { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .launcher-icon canvas { border-radius: 18%; }
+  .launcher-icon .app-label { font-size: 11px; color: #6B7280; font-weight: 500; }
+  .launcher-icon.ours .app-label { color: #A8C7FA; font-weight: 700; }
+  .launcher-icon.ours canvas { box-shadow: 0 0 24px rgba(168,199,250,0.15); }
+  .launcher-divider { width: 1px; height: 60px; background: rgba(255,255,255,0.06); margin: 0 8px; flex-shrink: 0; }
+
+  /* ── Concept Sections ── */
+  .concept-section {
+    max-width: 1100px; margin: 0 auto 48px;
+    background: #111118; border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+  .concept-header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 28px 36px; border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .concept-badge {
+    background: linear-gradient(135deg, #A8C7FA, #7FCFCF); color: #0A0A0F;
+    width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 900; font-size: 16px; flex-shrink: 0;
+  }
+  .concept-info h3 { font-size: 20px; font-weight: 800; color: #E6E1E5; }
+  .concept-info .tagline { font-size: 12px; color: #7FCFCF; font-weight: 600; margin-top: 2px; }
+
+  .concept-body { display: flex; gap: 0; }
+  .concept-preview {
+    flex: 0 0 340px; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 40px; gap: 24px;
+    background: rgba(255,255,255,0.01);
+  }
+  .concept-details { flex: 1; padding: 36px; display: flex; flex-direction: column; gap: 20px; }
+
+  .mask-row { display: flex; gap: 20px; align-items: flex-end; }
+  .mask-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .mask-item .mask-label { font-size: 9px; color: #504d56; text-transform: uppercase; letter-spacing: 0.05em; }
+  .mask-circle canvas { border-radius: 50%; }
+  .mask-squircle canvas { border-radius: 22%; }
+
+  .detail-block h4 { font-size: 11px; color: #79747E; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .detail-block p { font-size: 13px; color: #CAC4D0; line-height: 1.7; }
+  .detail-block .color-row { display: flex; gap: 8px; margin-top: 4px; }
+  .detail-block .swatch { width: 20px; height: 20px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.08); }
+
+  .quality-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .q-badge {
+    font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 600;
+    background: rgba(168,199,250,0.08); color: #A8C7FA; border: 1px solid rgba(168,199,250,0.15);
+  }
+
+  @media (max-width: 800px) {
+    .concept-body { flex-direction: column; }
+    .concept-preview { flex: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Premium Icon Concepts</h1>
+  <p>3 polished icon designs rendered with shadows, glows &amp; depth · Shown in a TV launcher mockup</p>
+</header>
+
+<!-- ═══ Launcher Mockup ═══ -->
+<div class="launcher-section">
+  <h2>How they look on your TV launcher</h2>
+  <div class="launcher-bg">
+    <div class="launcher-row" id="launcherRow"></div>
+  </div>
+</div>
+
+<!-- ═══ Concept Cards ═══ -->
+<div style="padding: 0 40px;" id="conceptCards"></div>
+
+<script>
+function rr(ctx, x, y, w, h, r) {
+  r = Math.min(r, w/2, h/2);
+  ctx.beginPath();
+  ctx.moveTo(x+r, y); ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r); ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h); ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r); ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y); ctx.closePath();
+}
+
+// ══════════════════════════════════════════════════════════════
+// A — "Aurora" · Rich multi-stop gradient + white TV with
+//     glowing data bars, soft drop shadow, bezel highlight
+// ══════════════════════════════════════════════════════════════
+function drawAurora(canvas) {
+  const ctx = canvas.getContext('2d');
+  const s = canvas.width / 108;
+
+  // BG: 4-stop diagonal gradient (indigo → blue → cyan → emerald)
+  const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  bg.addColorStop(0,    '#4338CA');
+  bg.addColorStop(0.35, '#2563EB');
+  bg.addColorStop(0.7,  '#0891B2');
+  bg.addColorStop(1,    '#059669');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Subtle radial lighten at center
+  const glow = ctx.createRadialGradient(54*s, 50*s, 0, 54*s, 50*s, 40*s);
+  glow.addColorStop(0, 'rgba(255,255,255,0.10)');
+  glow.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // ── Monitor with shadow ──
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.30)';
+  ctx.shadowBlur = 10*s;
+  ctx.shadowOffsetX = 0;
+  ctx.shadowOffsetY = 4*s;
+
+  // Monitor body (subtle vertical gradient: white → light gray)
+  const monGrad = ctx.createLinearGradient(0, 28*s, 0, 68*s);
+  monGrad.addColorStop(0, '#FFFFFF');
+  monGrad.addColorStop(1, '#E4E8EC');
+  ctx.fillStyle = monGrad;
+  rr(ctx, 25*s, 28*s, 58*s, 40*s, 6*s); ctx.fill();
+  ctx.restore();
+
+  // Screen (dark with subtle blue-lit gradient)
+  const scrGrad = ctx.createLinearGradient(0, 32*s, 0, 64*s);
+  scrGrad.addColorStop(0, '#0F172A');
+  scrGrad.addColorStop(1, '#1E293B');
+  ctx.fillStyle = scrGrad;
+  rr(ctx, 29*s, 32*s, 50*s, 32*s, 3.5*s); ctx.fill();
+
+  // Screen ambient glow
+  const ambGlow = ctx.createRadialGradient(54*s, 48*s, 0, 54*s, 48*s, 22*s);
+  ambGlow.addColorStop(0, 'rgba(37,99,235,0.10)');
+  ambGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = ambGlow;
+  rr(ctx, 29*s, 32*s, 50*s, 32*s, 3.5*s); ctx.fill();
+
+  // Data bars (with individual glow)
+  ctx.save();
+  ctx.shadowColor = 'rgba(239,189,107,0.50)';
+  ctx.shadowBlur = 8*s;
+  ctx.fillStyle = '#EFBD6B';
+  rr(ctx, 34*s, 38*s, 28*s, 4.5*s, 2.25*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(168,199,250,0.35)';
+  ctx.fillStyle = 'rgba(196,218,255,0.85)';
+  rr(ctx, 34*s, 46.5*s, 22*s, 4.5*s, 2.25*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(127,207,207,0.40)';
+  ctx.fillStyle = '#7FCFCF';
+  rr(ctx, 34*s, 55*s, 25*s, 4.5*s, 2.25*s); ctx.fill();
+  ctx.restore();
+
+  // Top bezel rim highlight
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 0.8*s;
+  ctx.beginPath();
+  ctx.moveTo(31*s, 28.5*s); ctx.lineTo(77*s, 28.5*s);
+  ctx.stroke();
+
+  // Stand (with subtle shadow)
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.15)';
+  ctx.shadowBlur = 4*s;
+  ctx.shadowOffsetY = 2*s;
+  const standGrad = ctx.createLinearGradient(0, 72*s, 0, 76*s);
+  standGrad.addColorStop(0, '#FFFFFF');
+  standGrad.addColorStop(1, '#D1D5DB');
+  ctx.fillStyle = standGrad;
+  rr(ctx, 42*s, 72*s, 24*s, 3.5*s, 1.75*s); ctx.fill();
+  ctx.restore();
+}
+
+// ══════════════════════════════════════════════════════════════
+// B — "Inspect" · TV screen IS the magnifying glass lens
+// ══════════════════════════════════════════════════════════════
+function drawInspect(canvas) {
+  const ctx = canvas.getContext('2d');
+  const s = canvas.width / 108;
+
+  // BG: Deep slate with subtle warm undertone
+  const bg = ctx.createRadialGradient(54*s, 48*s, 0, 54*s, 54*s, 54*s);
+  bg.addColorStop(0, '#1A1D2E');
+  bg.addColorStop(1, '#0C0E18');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Subtle grid pattern (very faint)
+  ctx.fillStyle = 'rgba(168,199,250,0.025)';
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      rr(ctx, (20 + c*13)*s, (20 + r*13)*s, 10*s, 10*s, 2*s);
+      ctx.fill();
+    }
+  }
+
+  // ── Magnifying glass body = rounded rect (TV screen shape) ──
+  ctx.save();
+  ctx.shadowColor = 'rgba(168,199,250,0.25)';
+  ctx.shadowBlur = 16*s;
+  ctx.strokeStyle = '#A8C7FA';
+  ctx.lineWidth = 3.5*s;
+  rr(ctx, 24*s, 24*s, 48*s, 36*s, 7*s);
+  ctx.stroke();
+  ctx.restore();
+
+  // Lens fill (dark, glossy)
+  const lensGrad = ctx.createLinearGradient(0, 24*s, 0, 60*s);
+  lensGrad.addColorStop(0, '#0F172A');
+  lensGrad.addColorStop(0.5, '#141C2E');
+  lensGrad.addColorStop(1, '#0F172A');
+  ctx.fillStyle = lensGrad;
+  rr(ctx, 26*s, 26*s, 44*s, 32*s, 5*s); ctx.fill();
+
+  // Glass highlight
+  ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+  ctx.lineWidth = 1.5*s;
+  ctx.beginPath();
+  ctx.moveTo(32*s, 27*s); ctx.lineTo(64*s, 27*s);
+  ctx.stroke();
+
+  // Data bars inside lens (with glow)
+  ctx.save();
+  ctx.shadowColor = 'rgba(239,189,107,0.45)';
+  ctx.shadowBlur = 6*s;
+  ctx.fillStyle = '#EFBD6B';
+  rr(ctx, 32*s, 33*s, 24*s, 4*s, 2*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(168,199,250,0.30)';
+  ctx.fillStyle = 'rgba(168,199,250,0.75)';
+  rr(ctx, 32*s, 40.5*s, 18*s, 4*s, 2*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(127,207,207,0.35)';
+  ctx.fillStyle = '#7FCFCF';
+  rr(ctx, 32*s, 48*s, 21*s, 4*s, 2*s); ctx.fill();
+  ctx.restore();
+
+  // ── Magnifying glass handle ──
+  ctx.save();
+  ctx.shadowColor = 'rgba(168,199,250,0.20)';
+  ctx.shadowBlur = 6*s;
+  const handleGrad = ctx.createLinearGradient(66*s, 56*s, 80*s, 76*s);
+  handleGrad.addColorStop(0, '#A8C7FA');
+  handleGrad.addColorStop(1, '#7FCFCF');
+  ctx.strokeStyle = handleGrad;
+  ctx.lineWidth = 4.5*s;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(68*s, 58*s);
+  ctx.lineTo(80*s, 74*s);
+  ctx.stroke();
+  ctx.restore();
+
+  // Handle end cap (gold accent)
+  ctx.fillStyle = '#EFBD6B';
+  ctx.beginPath();
+  ctx.arc(81*s, 75*s, 3*s, 0, Math.PI*2);
+  ctx.fill();
+}
+
+// ══════════════════════════════════════════════════════════════
+// C — "Slate" · Floating dark card with luminous edge-lit data
+// ══════════════════════════════════════════════════════════════
+function drawSlate(canvas) {
+  const ctx = canvas.getContext('2d');
+  const s = canvas.width / 108;
+
+  // BG: deep black with subtle blue radial
+  const bg = ctx.createRadialGradient(54*s, 50*s, 0, 54*s, 54*s, 54*s);
+  bg.addColorStop(0, '#111827');
+  bg.addColorStop(1, '#030712');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // ── Floating card ──
+  ctx.save();
+  ctx.shadowColor = 'rgba(168,199,250,0.12)';
+  ctx.shadowBlur = 20*s;
+  const cardGrad = ctx.createLinearGradient(0, 26*s, 0, 72*s);
+  cardGrad.addColorStop(0, '#1E293B');
+  cardGrad.addColorStop(0.5, '#172033');
+  cardGrad.addColorStop(1, '#0F172A');
+  ctx.fillStyle = cardGrad;
+  rr(ctx, 22*s, 26*s, 64*s, 46*s, 8*s); ctx.fill();
+  ctx.restore();
+
+  // Card border (gradient)
+  const borderGrad = ctx.createLinearGradient(22*s, 26*s, 86*s, 72*s);
+  borderGrad.addColorStop(0, 'rgba(168,199,250,0.25)');
+  borderGrad.addColorStop(0.5, 'rgba(127,207,207,0.15)');
+  borderGrad.addColorStop(1, 'rgba(168,199,250,0.08)');
+  ctx.strokeStyle = borderGrad;
+  ctx.lineWidth = 1.2*s;
+  rr(ctx, 22*s, 26*s, 64*s, 46*s, 8*s); ctx.stroke();
+
+  // Top edge highlight
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 0.8*s;
+  ctx.beginPath();
+  ctx.moveTo(30*s, 26.5*s); ctx.lineTo(78*s, 26.5*s);
+  ctx.stroke();
+
+  // Column header dots
+  const dotY = 34*s;
+  [[30, '#EFBD6B'], [36, '#A8C7FA'], [42, '#7FCFCF']].forEach(([x, color]) => {
+    ctx.fillStyle = color;
+    ctx.beginPath(); ctx.arc(x*s, dotY, 2*s, 0, Math.PI*2); ctx.fill();
+  });
+
+  // Separator
+  ctx.fillStyle = 'rgba(168,199,250,0.08)';
+  ctx.fillRect(28*s, 39*s, 52*s, 0.8*s);
+
+  // Glowing data rows
+  ctx.save();
+  ctx.shadowColor = 'rgba(239,189,107,0.40)';
+  ctx.shadowBlur = 6*s;
+  ctx.fillStyle = '#EFBD6B';
+  rr(ctx, 30*s, 43*s, 32*s, 4*s, 2*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(168,199,250,0.30)';
+  ctx.fillStyle = 'rgba(168,199,250,0.70)';
+  rr(ctx, 30*s, 51*s, 24*s, 4*s, 2*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(127,207,207,0.35)';
+  ctx.fillStyle = 'rgba(127,207,207,0.65)';
+  rr(ctx, 30*s, 59*s, 28*s, 4*s, 2*s); ctx.fill();
+  ctx.restore();
+
+  // Right-side column values
+  ctx.fillStyle = 'rgba(255,255,255,0.15)';
+  [[67, 44.5], [67, 52.5], [67, 60.5]].forEach(([x, y]) => {
+    rr(ctx, x*s, y*s, 12*s, 2.5*s, 1.25*s); ctx.fill();
+  });
+
+  // Bottom accent line
+  const accentGrad = ctx.createLinearGradient(38*s, 0, 70*s, 0);
+  accentGrad.addColorStop(0, '#A8C7FA');
+  accentGrad.addColorStop(1, '#7FCFCF');
+  ctx.fillStyle = accentGrad;
+  rr(ctx, 38*s, 76*s, 32*s, 2.5*s, 1.25*s); ctx.fill();
+}
+
+// ══════════════════════════════════════════════════════════════
+// Fake app icons for launcher mockup context
+// ══════════════════════════════════════════════════════════════
+function drawFakeNetflix(canvas) {
+  const ctx = canvas.getContext('2d'); const s = canvas.width;
+  ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, s, s);
+  ctx.fillStyle = '#E50914'; ctx.font = `900 ${s*0.55}px 'Inter', sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('N', s/2, s*0.48);
+}
+function drawFakePrime(canvas) {
+  const ctx = canvas.getContext('2d'); const s = canvas.width;
+  const bg = ctx.createLinearGradient(0, 0, s, s);
+  bg.addColorStop(0, '#1A242F'); bg.addColorStop(1, '#0F171E');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, s, s);
+  ctx.fillStyle = '#00A8E1'; ctx.font = `800 ${s*0.22}px 'Inter', sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('prime', s/2, s*0.42);
+  ctx.strokeStyle = '#48C5E8'; ctx.lineWidth = s*0.035; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(s*0.25, s*0.62); ctx.quadraticCurveTo(s*0.5, s*0.72, s*0.75, s*0.55); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(s*0.70, s*0.50); ctx.lineTo(s*0.75, s*0.55); ctx.lineTo(s*0.68, s*0.58); ctx.stroke();
+}
+function drawFakeYouTube(canvas) {
+  const ctx = canvas.getContext('2d'); const s = canvas.width;
+  ctx.fillStyle = '#282828'; ctx.fillRect(0, 0, s, s);
+  ctx.fillStyle = '#FF0000';
+  rr(ctx, s*0.15, s*0.3, s*0.7, s*0.4, s*0.06); ctx.fill();
+  ctx.fillStyle = '#FFFFFF';
+  ctx.beginPath(); ctx.moveTo(s*0.42, s*0.38); ctx.lineTo(s*0.42, s*0.62); ctx.lineTo(s*0.64, s*0.50); ctx.closePath(); ctx.fill();
+}
+function drawFakeDisney(canvas) {
+  const ctx = canvas.getContext('2d'); const s = canvas.width;
+  const bg = ctx.createLinearGradient(0, 0, 0, s);
+  bg.addColorStop(0, '#0B1B3A'); bg.addColorStop(1, '#040C1E');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, s, s);
+  ctx.fillStyle = '#FFFFFF'; ctx.font = `700 ${s*0.20}px 'Inter', sans-serif`;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('Disney+', s/2, s/2);
+}
+
+// ══════════════════════════════════════════════════════════════
+// Build page dynamically
+// ══════════════════════════════════════════════════════════════
+const concepts = [
+  {
+    id: 'A', name: 'Aurora',
+    tagline: 'Rich gradient · 3D depth · Glowing data bars',
+    desc: 'Instagram-style multi-chromatic gradient (indigo → blue → cyan → emerald) with a premium white TV monitor featuring realistic depth through drop shadows, bezel highlights, and individually glowing data bars. The 4-stop gradient creates visual richness that single-color icons can\'t match.',
+    colors: ['#4338CA','#2563EB','#0891B2','#059669','#EFBD6B','#7FCFCF'],
+    qualities: ['Drop shadow depth', '4-stop gradient', 'Bezel rim light', 'Individual bar glow', 'Screen ambient light'],
+    draw: drawAurora,
+  },
+  {
+    id: 'B', name: 'Inspect',
+    tagline: 'TV screen × Magnifying glass · Unique silhouette',
+    desc: 'The TV screen doubles as a magnifying glass lens — a rounded rectangle with a glowing blue border and an angled handle with gold tip. Combines "TV" + "Browser/Inspector" into one unmistakable shape. No other TV app uses this silhouette, giving instant brand recognition.',
+    colors: ['#1A1D2E','#A8C7FA','#7FCFCF','#EFBD6B','#0F172A'],
+    qualities: ['Unique shape', 'Lens glow effect', 'Glass reflection', 'Gradient handle', 'Faint grid texture'],
+    draw: drawInspect,
+  },
+  {
+    id: 'C', name: 'Slate',
+    tagline: 'Floating dark card · Edge-lit data · Sophisticated',
+    desc: 'A floating dark glass card with luminous gradient border, column header dots, and glowing data rows — like a premium dashboard widget hovering in space. The gradient accent line at the bottom anchors the composition. Sophisticated and distinctive, like a premium dev tool.',
+    colors: ['#111827','#1E293B','#A8C7FA','#7FCFCF','#EFBD6B'],
+    qualities: ['Gradient border', 'Glass card depth', 'Column header dots', 'Floating effect', 'Edge-lit glow'],
+    draw: drawSlate,
+  },
+];
+
+// ── Launcher mockup ──
+const launcherRow = document.getElementById('launcherRow');
+const fakeApps = [
+  { name: 'Netflix', draw: drawFakeNetflix },
+  { name: 'Prime Video', draw: drawFakePrime },
+];
+const fakeApps2 = [
+  { name: 'YouTube', draw: drawFakeYouTube },
+  { name: 'Disney+', draw: drawFakeDisney },
+];
+
+fakeApps.forEach(app => {
+  const item = document.createElement('div');
+  item.className = 'launcher-icon';
+  item.innerHTML = `<canvas id="fake_${app.name}" width="72" height="72"></canvas><div class="app-label">${app.name}</div>`;
+  launcherRow.appendChild(item);
+});
+const d1 = document.createElement('div'); d1.className = 'launcher-divider'; launcherRow.appendChild(d1);
+concepts.forEach((c, i) => {
+  const item = document.createElement('div');
+  item.className = 'launcher-icon ours';
+  item.innerHTML = `<canvas id="launch_${i}" width="72" height="72"></canvas><div class="app-label">${c.id}. ${c.name}</div>`;
+  launcherRow.appendChild(item);
+});
+const d2 = document.createElement('div'); d2.className = 'launcher-divider'; launcherRow.appendChild(d2);
+fakeApps2.forEach(app => {
+  const item = document.createElement('div');
+  item.className = 'launcher-icon';
+  item.innerHTML = `<canvas id="fake_${app.name}" width="72" height="72"></canvas><div class="app-label">${app.name}</div>`;
+  launcherRow.appendChild(item);
+});
+
+// ── Concept detail cards ──
+const cardsContainer = document.getElementById('conceptCards');
+concepts.forEach((c, i) => {
+  const section = document.createElement('div');
+  section.className = 'concept-section';
+  section.innerHTML = `
+    <div class="concept-header">
+      <div class="concept-badge">${c.id}</div>
+      <div class="concept-info"><h3>${c.name}</h3><div class="tagline">${c.tagline}</div></div>
+    </div>
+    <div class="concept-body">
+      <div class="concept-preview">
+        <canvas id="big_${i}" width="200" height="200" style="border-radius:22%;"></canvas>
+        <div class="mask-row">
+          <div class="mask-item"><canvas id="sq_${i}" width="80" height="80"></canvas><div class="mask-label">Square</div></div>
+          <div class="mask-item mask-circle"><canvas id="ci_${i}" width="80" height="80"></canvas><div class="mask-label">Circle</div></div>
+          <div class="mask-item mask-squircle"><canvas id="sc_${i}" width="80" height="80"></canvas><div class="mask-label">Squircle</div></div>
+        </div>
+      </div>
+      <div class="concept-details">
+        <div class="detail-block"><h4>Design</h4><p>${c.desc}</p></div>
+        <div class="detail-block"><h4>Palette</h4><div class="color-row">${c.colors.map(cl => `<div class="swatch" style="background:${cl};" title="${cl}"></div>`).join('')}</div></div>
+        <div class="detail-block"><h4>Premium Details</h4><div class="quality-badges">${c.qualities.map(q => `<span class="q-badge">${q}</span>`).join('')}</div></div>
+      </div>
+    </div>
+  `;
+  cardsContainer.appendChild(section);
+});
+
+// ── Render ──
+window.addEventListener('load', () => {
+  drawFakeNetflix(document.getElementById('fake_Netflix'));
+  drawFakePrime(document.getElementById('fake_Prime Video'));
+  drawFakeYouTube(document.getElementById('fake_YouTube'));
+  drawFakeDisney(document.getElementById('fake_Disney+'));
+  concepts.forEach((c, i) => {
+    c.draw(document.getElementById(`launch_${i}`));
+    c.draw(document.getElementById(`big_${i}`));
+    c.draw(document.getElementById(`sq_${i}`));
+    c.draw(document.getElementById(`ci_${i}`));
+    c.draw(document.getElementById(`sc_${i}`));
+  });
+});
+</script>
+</body>
+</html>
+

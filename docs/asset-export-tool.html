@@ -28,7 +28,7 @@
 <body>
 
 <h1>TvProvider Browser — Asset Export Tool</h1>
-<p class="subtitle">Grid &amp; Signal design · Click "Download" to save each asset as PNG</p>
+<p class="subtitle">Aurora design · 4-stop gradient · Premium depth &amp; glow · Click "Download" to save each asset as PNG</p>
 
 <div class="instructions">
   <h3>How to use exported assets</h3>
@@ -94,18 +94,30 @@
 </div>
 
 <script>
-// ── Color palette (from app theme) ──
+// ── Color palette (Aurora design) ──
 const C = {
-  surfaceBg:    '#0E0E12',
-  container:    '#1C1B1F',
-  card:         '#211F26',
-  elevated:     '#302D38',
-  primary:      '#A8C7FA',
-  secondary:    '#7FCFCF',
-  tertiary:     '#EFBD6B',
-  onSurface:    '#E6E1E5',
-  onSurfaceVar: '#CAC4D0',
-  onSurfaceDim: '#79747E',
+  // Icon gradient (4-stop)
+  grad1: '#4338CA',  // Indigo
+  grad2: '#2563EB',  // Blue
+  grad3: '#0891B2',  // Cyan
+  grad4: '#059669',  // Emerald
+  // Screen
+  screenTop:  '#0F172A',
+  screenBot:  '#1E293B',
+  // Monitor body
+  monTop: '#FFFFFF',
+  monBot: '#E4E8EC',
+  standTop: '#FFFFFF',
+  standBot: '#D1D5DB',
+  // Accent colors
+  gold:      '#EFBD6B',
+  blueWhite: '#C4DAFF',
+  teal:      '#7FCFCF',
+  primary:   '#A8C7FA',
+  // Surface colors (for banner)
+  surfaceBg:  '#0E0E12',
+  container:  '#1C1B1F',
+  onSurface:  '#E6E1E5',
 };
 
 function hexToRgba(hex, alpha) {
@@ -115,235 +127,302 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 
-// ── Draw Icon (512x512) ──
-function drawIcon(canvas) {
-  const ctx = canvas.getContext('2d');
-  const s = canvas.width / 108; // scale from 108dp viewport
-
-  // Background
-  ctx.fillStyle = C.surfaceBg;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = hexToRgba(C.container, 0.5);
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Subtle grid
-  ctx.fillStyle = hexToRgba(C.primary, 0.07);
-  for (let r = 0; r < 4; r++) {
-    for (let c = 0; c < 4; c++) {
-      ctx.beginPath();
-      const x = (28 + c * 13) * s, y = (28 + r * 13) * s, w = 11 * s, h = 11 * s;
-      ctx.roundRect(x, y, w, h, 2 * s);
-      ctx.fill();
-    }
-  }
-
-  // TV Frame outer
-  ctx.fillStyle = C.primary;
+// ── Rounded-rect helper ──
+function roundRect(ctx, x, y, w, h, r) {
+  r = Math.min(r, w / 2, h / 2);
   ctx.beginPath();
-  ctx.roundRect(22*s, 32*s, 64*s, 40*s, 4*s);
-  ctx.fill();
-
-  // TV Screen inner
-  ctx.fillStyle = C.surfaceBg;
-  ctx.beginPath();
-  ctx.roundRect(25*s, 35*s, 58*s, 34*s, 2.5*s);
-  ctx.fill();
-
-  // Data rows inside screen
-  const rows = [
-    { y: 42, w: 28, color: C.tertiary, alpha: 1 },
-    { y: 48, w: 22, color: C.primary, alpha: 0.7 },
-    { y: 54, w: 25, color: C.secondary, alpha: 0.5 },
-    { y: 60, w: 18, color: C.primary, alpha: 0.3 },
-  ];
-  rows.forEach(r => {
-    ctx.fillStyle = hexToRgba(r.color, r.alpha);
-    ctx.beginPath();
-    ctx.roundRect(30*s, r.y*s, r.w*s, 3*s, 1.5*s);
-    ctx.fill();
-  });
-
-  // TV Stand
-  const grad = ctx.createLinearGradient(42*s, 0, 60*s, 0);
-  grad.addColorStop(0, C.primary);
-  grad.addColorStop(1, C.secondary);
-  ctx.fillStyle = grad;
-  ctx.beginPath();
-  ctx.roundRect(42*s, 73*s, 24*s, 3*s, 1.5*s);
-  ctx.fill();
-
-  // Signal bars
-  const bars = [
-    { x: 70, h: 6, y: 36, alpha: 0.5 },
-    { x: 74.5, h: 10, y: 32, alpha: 0.7 },
-    { x: 79, h: 15, y: 27, alpha: 1 },
-  ];
-  bars.forEach(b => {
-    ctx.fillStyle = hexToRgba(C.secondary, b.alpha);
-    ctx.beginPath();
-    ctx.roundRect(b.x*s, b.y*s, 3*s, b.h*s, 1*s);
-    ctx.fill();
-  });
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 
-// ── Draw Banner (any size) ──
+// ══════════════════════════════════════════════════════════════════
+// Draw Icon (512×512) — Bold white TV on vibrant gradient
+// Matches: ic_launcher_background.xml + ic_launcher_foreground.xml
+// Viewport: 108×108 dp
+// ══════════════════════════════════════════════════════════════════
+function drawIcon(canvas) {
+  const ctx = canvas.getContext('2d');
+  const s = canvas.width / 108;
+
+  // ── Background: 4-stop diagonal gradient ──
+  const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+  bg.addColorStop(0, C.grad1);
+  bg.addColorStop(0.35, C.grad2);
+  bg.addColorStop(0.7, C.grad3);
+  bg.addColorStop(1, C.grad4);
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Center radial glow
+  const glow = ctx.createRadialGradient(54*s, 50*s, 0, 54*s, 50*s, 40*s);
+  glow.addColorStop(0, 'rgba(255,255,255,0.10)');
+  glow.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // ── Monitor with drop shadow ──
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.30)';
+  ctx.shadowBlur = 10*s;
+  ctx.shadowOffsetY = 4*s;
+  const monGrad = ctx.createLinearGradient(0, 28*s, 0, 68*s);
+  monGrad.addColorStop(0, C.monTop);
+  monGrad.addColorStop(1, C.monBot);
+  ctx.fillStyle = monGrad;
+  roundRect(ctx, 25*s, 28*s, 58*s, 40*s, 6*s); ctx.fill();
+  ctx.restore();
+
+  // Screen (dark gradient)
+  const scrGrad = ctx.createLinearGradient(0, 32*s, 0, 64*s);
+  scrGrad.addColorStop(0, C.screenTop);
+  scrGrad.addColorStop(1, C.screenBot);
+  ctx.fillStyle = scrGrad;
+  roundRect(ctx, 29*s, 32*s, 50*s, 32*s, 3.5*s); ctx.fill();
+
+  // Screen ambient glow
+  const ambGlow = ctx.createRadialGradient(54*s, 48*s, 0, 54*s, 48*s, 22*s);
+  ambGlow.addColorStop(0, 'rgba(37,99,235,0.10)');
+  ambGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = ambGlow;
+  roundRect(ctx, 29*s, 32*s, 50*s, 32*s, 3.5*s); ctx.fill();
+
+  // Data bars with individual glow
+  ctx.save();
+  ctx.shadowColor = 'rgba(239,189,107,0.50)';
+  ctx.shadowBlur = 8*s;
+  ctx.fillStyle = C.gold;
+  roundRect(ctx, 34*s, 38*s, 28*s, 4.5*s, 2.25*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(168,199,250,0.35)';
+  ctx.fillStyle = 'rgba(196,218,255,0.85)';
+  roundRect(ctx, 34*s, 46.5*s, 22*s, 4.5*s, 2.25*s); ctx.fill();
+
+  ctx.shadowColor = 'rgba(127,207,207,0.40)';
+  ctx.fillStyle = C.teal;
+  roundRect(ctx, 34*s, 55*s, 25*s, 4.5*s, 2.25*s); ctx.fill();
+  ctx.restore();
+
+  // Top bezel rim highlight
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ctx.lineWidth = 0.8*s;
+  ctx.beginPath();
+  ctx.moveTo(31*s, 28.5*s); ctx.lineTo(77*s, 28.5*s);
+  ctx.stroke();
+
+  // Stand with shadow
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.15)';
+  ctx.shadowBlur = 4*s;
+  ctx.shadowOffsetY = 2*s;
+  const standGrad = ctx.createLinearGradient(0, 72*s, 0, 76*s);
+  standGrad.addColorStop(0, C.standTop);
+  standGrad.addColorStop(1, C.standBot);
+  ctx.fillStyle = standGrad;
+  roundRect(ctx, 42*s, 72*s, 24*s, 3.5*s, 1.75*s); ctx.fill();
+  ctx.restore();
+}
+
+// ══════════════════════════════════════════════════════════════════
+// Draw Banner (any target size)
+// Matches: tv_banner.xml — 320×180 viewport
+// ══════════════════════════════════════════════════════════════════
 function drawBanner(canvas) {
   const ctx = canvas.getContext('2d');
   const w = canvas.width, h = canvas.height;
   const sx = w / 320, sy = h / 180;
+  const sr = Math.min(sx, sy);
 
-  // Background
-  ctx.fillStyle = C.surfaceBg;
+  // ── Background: Aurora 4-stop diagonal gradient (matches icon) ──
+  const bg = ctx.createLinearGradient(0, 0, w, h);
+  bg.addColorStop(0, C.grad1);
+  bg.addColorStop(0.35, C.grad2);
+  bg.addColorStop(0.7, C.grad3);
+  bg.addColorStop(1, C.grad4);
+  ctx.fillStyle = bg;
   ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = hexToRgba(C.container, 0.35);
-  ctx.fillRect(w * 0.35, 0, w * 0.65, h);
 
-  // Border
-  ctx.strokeStyle = hexToRgba(C.primary, 0.06);
-  ctx.lineWidth = Math.max(1, sx);
-  ctx.strokeRect(0, 0, w, h);
+  // Center glow
+  const glow = ctx.createRadialGradient(w/2, h*0.44, 0, w/2, h*0.44, h*0.5);
+  glow.addColorStop(0, 'rgba(255,255,255,0.08)');
+  glow.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, w, h);
 
-  // TV Frame
-  const fx = 32*sx, fy = 40*sy, fw = 88*sx, fh = 68*sy;
-  ctx.fillStyle = C.primary;
-  ctx.beginPath();
-  ctx.roundRect(fx, fy, fw, fh, 5*sx);
-  ctx.fill();
+  // ── TV Monitor (left zone, Aurora style with depth) ──
+  // Frame: white→gray gradient with shadow
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.25)';
+  ctx.shadowBlur = 8*sr;
+  ctx.shadowOffsetY = 3*sr;
+  const monGrad = ctx.createLinearGradient(0, 56*sy, 0, 116*sy);
+  monGrad.addColorStop(0, C.monTop);
+  monGrad.addColorStop(1, C.monBot);
+  ctx.fillStyle = monGrad;
+  roundRect(ctx, 30*sx, 56*sy, 80*sx, 60*sy, 4*sr); ctx.fill();
+  ctx.restore();
 
-  // Screen
-  ctx.fillStyle = C.surfaceBg;
-  ctx.beginPath();
-  ctx.roundRect(fx+3*sx, fy+3*sy, fw-6*sx, fh-6*sy, 3*sx);
-  ctx.fill();
+  // Screen: dark gradient
+  const scrGrad = ctx.createLinearGradient(0, 60*sy, 0, 112*sy);
+  scrGrad.addColorStop(0, C.screenTop);
+  scrGrad.addColorStop(1, C.screenBot);
+  ctx.fillStyle = scrGrad;
+  roundRect(ctx, 34*sx, 60*sy, 72*sx, 52*sy, 3*sr); ctx.fill();
 
-  // Data rows
-  const dataRows = [
-    { y: 52, w: 42, color: C.tertiary, alpha: 1 },
-    { y: 61, w: 34, color: C.primary, alpha: 0.65 },
-    { y: 70, w: 38, color: C.secondary, alpha: 0.45 },
-    { y: 79, w: 28, color: C.primary, alpha: 0.2 },
-    { y: 88, w: 32, color: C.secondary, alpha: 0.12 },
-  ];
-  dataRows.forEach(r => {
-    ctx.fillStyle = hexToRgba(r.color, r.alpha);
-    ctx.beginPath();
-    ctx.roundRect(42*sx, r.y*sy, r.w*sx, 4*sy, 1.5*Math.min(sx,sy));
-    ctx.fill();
-  });
+  // Screen ambient glow
+  const ambGlow = ctx.createRadialGradient(70*sx, 86*sy, 0, 70*sx, 86*sy, 30*sr);
+  ambGlow.addColorStop(0, 'rgba(37,99,235,0.08)');
+  ambGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = ambGlow;
+  roundRect(ctx, 34*sx, 60*sy, 72*sx, 52*sy, 3*sr); ctx.fill();
 
-  // Stand
-  const standGrad = ctx.createLinearGradient(60*sx, 0, 88*sx, 0);
-  standGrad.addColorStop(0, C.primary);
-  standGrad.addColorStop(1, C.secondary);
+  // Data rows with glow
+  ctx.save();
+  ctx.shadowColor = 'rgba(239,189,107,0.40)';
+  ctx.shadowBlur = 5*sr;
+  ctx.fillStyle = C.gold;
+  roundRect(ctx, 40*sx, 68*sy, 36*sx, 5*sy, 1.5*sr); ctx.fill();
+
+  ctx.shadowColor = 'rgba(168,199,250,0.30)';
+  ctx.fillStyle = 'rgba(196,218,255,0.85)';
+  roundRect(ctx, 40*sx, 77*sy, 28*sx, 5*sy, 1.5*sr); ctx.fill();
+
+  ctx.shadowColor = 'rgba(127,207,207,0.35)';
+  ctx.fillStyle = C.teal;
+  roundRect(ctx, 40*sx, 86*sy, 32*sx, 5*sy, 1.5*sr); ctx.fill();
+
+  ctx.shadowColor = 'transparent';
+  ctx.fillStyle = 'rgba(255,255,255,0.35)';
+  roundRect(ctx, 40*sx, 95*sy, 22*sx, 5*sy, 1.5*sr); ctx.fill();
+  ctx.restore();
+
+  // Stand: white→gray gradient with shadow
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.12)';
+  ctx.shadowBlur = 3*sr;
+  ctx.shadowOffsetY = 1.5*sr;
+  const standGrad = ctx.createLinearGradient(0, 120*sy, 0, 124*sy);
+  standGrad.addColorStop(0, C.standTop);
+  standGrad.addColorStop(1, C.standBot);
   ctx.fillStyle = standGrad;
-  ctx.beginPath();
-  ctx.roundRect(60*sx, 112*sy, 32*sx, 4*sy, 2*Math.min(sx,sy));
-  ctx.fill();
+  roundRect(ctx, 54*sx, 120*sy, 32*sx, 4*sy, 2*sr); ctx.fill();
+  ctx.restore();
 
-  // App name
-  ctx.fillStyle = C.onSurface;
+  // ── Text (right zone — white on gradient) ──
+  ctx.fillStyle = '#FFFFFF';
   ctx.font = `800 ${Math.round(28*sy)}px 'Inter', system-ui, sans-serif`;
   ctx.textBaseline = 'top';
-  ctx.fillText('TvProvider', 146*sx, 58*sy);
-
-  ctx.font = `800 ${Math.round(28*sy)}px 'Inter', system-ui, sans-serif`;
-  ctx.fillText('Browser', 146*sx, 82*sy);
+  ctx.fillText('TvProvider', 148*sx, 62*sy);
+  ctx.fillText('Browser', 148*sx, 86*sy);
 
   // Tagline
-  ctx.fillStyle = hexToRgba(C.primary, 0.7);
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
   ctx.font = `500 ${Math.round(11*sy)}px 'Inter', system-ui, sans-serif`;
-  ctx.fillText('Android TV Database Viewer', 146*sx, 114*sy);
+  ctx.fillText('Android TV Database Viewer', 148*sx, 114*sy);
+
+  // Accent line
+  ctx.fillStyle = 'rgba(255,255,255,0.30)';
+  roundRect(ctx, 148*sx, 126*sy, 70*sx, 2*sy, 1*sr); ctx.fill();
 }
 
-// ── Draw Feature Graphic (1024x500) ──
+// ══════════════════════════════════════════════════════════════════
+// Draw Feature Graphic (1024×500)
+// ══════════════════════════════════════════════════════════════════
 function drawFeatureGraphic(canvas) {
   const ctx = canvas.getContext('2d');
   const w = canvas.width, h = canvas.height;
 
-  // Background gradient
+  // Background: Aurora 4-stop gradient
   const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-  bgGrad.addColorStop(0, C.surfaceBg);
-  bgGrad.addColorStop(0.5, C.container);
-  bgGrad.addColorStop(1, C.surfaceBg);
+  bgGrad.addColorStop(0, C.grad1);
+  bgGrad.addColorStop(0.35, C.grad2);
+  bgGrad.addColorStop(0.7, C.grad3);
+  bgGrad.addColorStop(1, C.grad4);
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, w, h);
 
-  // Subtle grid (large)
-  ctx.fillStyle = hexToRgba(C.primary, 0.04);
-  for (let r = 0; r < 6; r++) {
-    for (let c = 0; c < 10; c++) {
-      ctx.beginPath();
-      ctx.roundRect(60 + c * 95, 40 + r * 75, 85, 65, 6);
-      ctx.fill();
-    }
-  }
+  // Subtle radial center glow
+  const fgGlow = ctx.createRadialGradient(w*0.35, h/2, 0, w*0.35, h/2, h*0.6);
+  fgGlow.addColorStop(0, 'rgba(255,255,255,0.08)');
+  fgGlow.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = fgGlow;
+  ctx.fillRect(0, 0, w, h);
 
-  // TV Frame (center-left)
-  const fScale = 2.8;
-  const fx = 100, fy = h/2 - 80*fScale/2;
-  ctx.fillStyle = C.primary;
-  ctx.beginPath();
-  ctx.roundRect(fx, fy, 90*fScale, 65*fScale, 12);
-  ctx.fill();
-  ctx.fillStyle = C.surfaceBg;
-  ctx.beginPath();
-  ctx.roundRect(fx+8, fy+8, 90*fScale-16, 65*fScale-16, 6);
-  ctx.fill();
+  // ── TV Monitor (center-left, Aurora style with shadow) ──
+  const fS = 3.2;
+  const fx = 80, fy = h/2 - (40*fS)/2 - 8;
 
-  // Data rows in TV
-  const tvRows = [
-    { y: fy+28, w: 120, color: C.tertiary, alpha: 1 },
-    { y: fy+48, w: 95, color: C.primary, alpha: 0.65 },
-    { y: fy+68, w: 105, color: C.secondary, alpha: 0.45 },
-    { y: fy+88, w: 80, color: C.primary, alpha: 0.25 },
-    { y: fy+108, w: 90, color: C.secondary, alpha: 0.15 },
-  ];
-  tvRows.forEach(r => {
-    ctx.fillStyle = hexToRgba(r.color, r.alpha);
-    ctx.beginPath();
-    ctx.roundRect(fx+24, r.y, r.w, 10, 4);
-    ctx.fill();
-  });
+  // Monitor with drop shadow
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.30)';
+  ctx.shadowBlur = 10*fS;
+  ctx.shadowOffsetY = 4*fS;
+  const fgMonGrad = ctx.createLinearGradient(0, fy, 0, fy+40*fS);
+  fgMonGrad.addColorStop(0, C.monTop);
+  fgMonGrad.addColorStop(1, C.monBot);
+  ctx.fillStyle = fgMonGrad;
+  roundRect(ctx, fx, fy, 58*fS, 40*fS, 6*fS); ctx.fill();
+  ctx.restore();
+
+  // Screen: dark gradient
+  const fgScrGrad = ctx.createLinearGradient(0, fy+4*fS, 0, fy+36*fS);
+  fgScrGrad.addColorStop(0, C.screenTop);
+  fgScrGrad.addColorStop(1, C.screenBot);
+  ctx.fillStyle = fgScrGrad;
+  roundRect(ctx, fx+4*fS, fy+4*fS, 50*fS, 32*fS, 3.5*fS); ctx.fill();
+
+  // Data bars with glow
+  ctx.save();
+  const rx = fx + 9*fS, rh = 4.5*fS, rr = 2.25*fS;
+  ctx.shadowColor = 'rgba(239,189,107,0.50)';
+  ctx.shadowBlur = 8*fS;
+  ctx.fillStyle = C.gold;
+  roundRect(ctx, rx, fy+10*fS, 28*fS, rh, rr); ctx.fill();
+  ctx.shadowColor = 'rgba(168,199,250,0.35)';
+  ctx.fillStyle = 'rgba(196,218,255,0.85)';
+  roundRect(ctx, rx, fy+18.5*fS, 22*fS, rh, rr); ctx.fill();
+  ctx.shadowColor = 'rgba(127,207,207,0.40)';
+  ctx.fillStyle = C.teal;
+  roundRect(ctx, rx, fy+27*fS, 25*fS, rh, rr); ctx.fill();
+  ctx.restore();
 
   // Stand
-  const sGrad = ctx.createLinearGradient(fx+60, 0, fx+180, 0);
-  sGrad.addColorStop(0, C.primary);
-  sGrad.addColorStop(1, C.secondary);
-  ctx.fillStyle = sGrad;
-  ctx.beginPath();
-  ctx.roundRect(fx+70, fy+65*fScale+10, 80, 8, 4);
-  ctx.fill();
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.15)';
+  ctx.shadowBlur = 4*fS;
+  ctx.shadowOffsetY = 2*fS;
+  const fgStandGrad = ctx.createLinearGradient(0, fy+44*fS, 0, fy+47.5*fS);
+  fgStandGrad.addColorStop(0, C.standTop);
+  fgStandGrad.addColorStop(1, C.standBot);
+  ctx.fillStyle = fgStandGrad;
+  roundRect(ctx, fx+17*fS, fy+44*fS, 24*fS, 3.5*fS, 1.75*fS); ctx.fill();
+  ctx.restore();
 
-  // Signal bars
-  const sigX = fx + 90*fScale - 50;
-  [{h:20, y:fy+15, a:0.5}, {h:35, y:fy, a:0.7}, {h:50, y:fy-15, a:1}].forEach((b, i) => {
-    ctx.fillStyle = hexToRgba(C.secondary, b.a);
-    ctx.beginPath();
-    ctx.roundRect(sigX + i*14, b.y, 8, b.h, 3);
-    ctx.fill();
-  });
-
-  // App Name (right side)
-  ctx.fillStyle = C.onSurface;
+  // ── Text (right side) ──
+  const textX = fx + 60*fS + 50;
+  ctx.fillStyle = '#FFFFFF';
   ctx.font = "900 72px 'Inter', system-ui, sans-serif";
   ctx.textBaseline = 'top';
-  const textX = fx + 90*fScale + 60;
   ctx.fillText('TvProvider', textX, h/2 - 60);
   ctx.fillText('Browser', textX, h/2 + 5);
 
-  // Tagline
-  ctx.fillStyle = hexToRgba(C.primary, 0.6);
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
   ctx.font = "500 24px 'Inter', system-ui, sans-serif";
-  ctx.fillText('Android TV Database Inspector', textX, h/2 + 90);
+  ctx.fillText('Android TV Database Viewer', textX, h/2 + 90);
 
-  // Accent line under tagline
-  const lineGrad = ctx.createLinearGradient(textX, 0, textX + 300, 0);
-  lineGrad.addColorStop(0, hexToRgba(C.primary, 0.3));
-  lineGrad.addColorStop(1, hexToRgba(C.secondary, 0.1));
+  // Accent line
+  const lineGrad = ctx.createLinearGradient(textX, 0, textX+300, 0);
+  lineGrad.addColorStop(0, 'rgba(255,255,255,0.3)');
+  lineGrad.addColorStop(1, 'rgba(255,255,255,0.05)');
   ctx.fillStyle = lineGrad;
-  ctx.beginPath();
-  ctx.roundRect(textX, h/2 + 122, 300, 3, 1.5);
-  ctx.fill();
+  roundRect(ctx, textX, h/2 + 122, 300, 3, 1.5); ctx.fill();
 }
 
 // ── Download helper ──
@@ -357,16 +436,9 @@ function downloadCanvas(canvasId, filename) {
 
 // ── Render all ──
 window.addEventListener('load', () => {
-  // Icon
   drawIcon(document.getElementById('iconCanvas'));
-
-  // Banner xhdpi
   drawBanner(document.getElementById('bannerCanvas'));
-
-  // Feature Graphic
   drawFeatureGraphic(document.getElementById('featureCanvas'));
-
-  // TV Banner HD
   drawBanner(document.getElementById('tvBannerHDCanvas'));
 });
 </script>

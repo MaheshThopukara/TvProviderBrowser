@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!--
+        In-app logo — TV monitor fills the entire canvas.
+        No adaptive-icon padding. Use this in layouts, toolbars, etc.
+    -->
+
+    <!-- TV Monitor Body: white → light gray gradient -->
+    <path android:pathData="M6,4 L42,4 Q46,4 46,8 L46,32 Q46,36 42,36 L6,36 Q2,36 2,32 L2,8 Q2,4 6,4 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="24" android:startY="4"
+                android:endX="24" android:endY="36">
+                <item android:offset="0" android:color="#FFFFFFFF" />
+                <item android:offset="1" android:color="#FFE4E8EC" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Top bezel rim highlight -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:fillAlpha="0.35"
+        android:pathData="M6,4 L42,4 L42,5 L6,5 Z" />
+
+    <!-- Screen interior: dark gradient -->
+    <path android:pathData="M6,8 L42,8 Q44,8 44,10 L44,30 Q44,33 42,33 L6,33 Q4,33 4,30 L4,10 Q4,8 6,8 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="24" android:startY="8"
+                android:endX="24" android:endY="33">
+                <item android:offset="0" android:color="#FF0F172A" />
+                <item android:offset="1" android:color="#FF1E293B" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Data bar 1: Gold -->
+    <path
+        android:fillColor="#EFBD6B"
+        android:pathData="M7,12 h18 a1.5,1.5 0 0,1 0,3 h-18 a1.5,1.5 0 0,1 0,-3 Z" />
+
+    <!-- Data bar 2: Blue-white -->
+    <path
+        android:fillColor="#C4DAFF"
+        android:fillAlpha="0.85"
+        android:pathData="M7,18.5 h14 a1.5,1.5 0 0,1 0,3 h-14 a1.5,1.5 0 0,1 0,-3 Z" />
+
+    <!-- Data bar 3: Teal -->
+    <path
+        android:fillColor="#7FCFCF"
+        android:pathData="M7,25 h16 a1.5,1.5 0 0,1 0,3 h-16 a1.5,1.5 0 0,1 0,-3 Z" />
+
+    <!-- TV Stand: white → gray gradient -->
+    <path android:pathData="M16,39 h16 a1.5,1.5 0 0,1 0,3 h-16 a1.5,1.5 0 0,1 0,-3 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="24" android:startY="39"
+                android:endX="24" android:endY="42">
+                <item android:offset="0" android:color="#FFFFFFFF" />
+                <item android:offset="1" android:color="#FFD1D5DB" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+</vector>
+
