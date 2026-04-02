@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Base fill: surface_bg #0E0E12 -->
+    <path
+        android:fillColor="#0E0E12"
+        android:pathData="M0,0h108v108H0z" />
+
+    <!-- Gradient overlay: surface_container #1C1B1F fading to surface_card #211F26 -->
+    <path
+        android:fillColor="#1C1B1F"
+        android:fillAlpha="0.5"
+        android:pathData="M0,0L108,0L108,108L0,108z" />
+
+    <!-- Subtle 4x4 grid backdrop (inside safe zone area, ~7% opacity blue) -->
+    <!-- Row 1 -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M28,28h11v11H28z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M41,28h11v11H41z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M54,28h11v11H54z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M67,28h11v11H67z" />
+    <!-- Row 2 -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M28,41h11v11H28z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M41,41h11v11H41z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M54,41h11v11H54z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M67,41h11v11H67z" />
+    <!-- Row 3 -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M28,54h11v11H28z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M41,54h11v11H41z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M54,54h11v11H54z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M67,54h11v11H67z" />
+    <!-- Row 4 -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M28,67h11v11H28z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M41,67h11v11H41z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M54,67h11v11H54z" />
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
+        android:pathData="M67,67h11v11H67z" />
+</vector>
+

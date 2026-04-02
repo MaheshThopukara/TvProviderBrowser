@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/surface_card_hover" />
+            <stroke android:width="2dp" android:color="@color/focus_ring" />
+            <size android:width="48dp" android:height="48dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/surface_elevated" />
+            <stroke android:width="2dp" android:color="@android:color/transparent" />
+            <size android:width="48dp" android:height="48dp" />
+        </shape>
+    </item>
+</selector>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ── Surface Palette (Material 3 Dark) ── -->
+    <color name="surface_bg">#0E0E12</color>
+    <color name="surface_container">#1C1B1F</color>
+    <color name="surface_card">#211F26</color>
+    <color name="surface_card_hover">#2B2930</color>
+    <color name="surface_elevated">#302D38</color>
+    <color name="surface_overlay">#B8000000</color>
+
+    <!-- ── Primary / Accent ── -->
+    <color name="primary">#A8C7FA</color>
+    <color name="primary_container">#004A77</color>
+    <color name="on_primary">#003258</color>
+    <color name="secondary">#7FCFCF</color>
+    <color name="secondary_container">#004F4F</color>
+    <color name="tertiary">#EFBD6B</color>
+
+    <!-- ── Text ── -->
+    <color name="on_surface">#E6E1E5</color>
+    <color name="on_surface_variant">#CAC4D0</color>
+    <color name="on_surface_dim">#79747E</color>
+
+    <!-- ── Focus & Interaction ── -->
+    <color name="focus_ring">#A8C7FA</color>
+
+    <!-- ── Table-specific ── -->
+    <color name="row_even">#04FFFFFF</color>
+    <color name="row_odd">#00000000</color>
+    <color name="grid_line_header">#10FFFFFF</color>
+
+    <!-- ── Banner gradients ── -->
+    <color name="banner_channels_start">#1a3a5c</color>
+    <color name="banner_channels_end">#0d2747</color>
+
+    <!-- ── Hero ── -->
+    <color name="hero_start">#1A2744</color>
+    <color name="hero_mid">#162237</color>
+    <color name="hero_end">#0E1A2E</color>
+
+    <!-- ── Stat icon backgrounds ── -->
+    <color name="stat_blue_bg">#26A8C7FA</color>
+    <color name="stat_teal_bg">#267FCFCF</color>
+    <color name="stat_warm_bg">#26EFBD6B</color>
+</resources>

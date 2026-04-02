@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="Theme.TvProviderBrowser" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_container</item>
+        <item name="colorAccent">@color/secondary</item>
+        <item name="android:windowBackground">@color/surface_bg</item>
+        <item name="android:colorBackground">@color/surface_bg</item>
+        <item name="android:textColorPrimary">@color/on_surface</item>
+        <item name="android:textColorSecondary">@color/on_surface_variant</item>
+    </style>
+</resources>

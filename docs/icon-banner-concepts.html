@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TvProvider Browser — Icon &amp; Banner Concepts (Google TV Guidelines)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #121218; color: #E6E1E5; font-family: 'Google Sans', 'Segoe UI', system-ui, -apple-system, sans-serif; padding: 40px; }
+  h1 { text-align: center; font-size: 28px; margin-bottom: 8px; color: #A8C7FA; }
+  .subtitle { text-align: center; color: #79747E; font-size: 15px; margin-bottom: 16px; }
+
+  /* Theme reference */
+  .theme-ref { background: #1C1B1F; border: 1px solid #2B2930; border-radius: 16px; padding: 24px 32px; margin-bottom: 20px; max-width: 820px; margin-left: auto; margin-right: auto; }
+  .theme-ref h2 { color: #CAC4D0; font-size: 16px; margin-bottom: 14px; }
+  .swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+  .swatch { display: flex; align-items: center; gap: 8px; }
+  .swatch .dot { width: 24px; height: 24px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); }
+  .swatch .label { font-size: 11px; color: #79747E; }
+
+  /* Guidelines checklist */
+  .guidelines { background: #1a2744; border: 1px solid #004A77; border-radius: 16px; padding: 28px 32px; margin-bottom: 48px; max-width: 820px; margin-left: auto; margin-right: auto; }
+  .guidelines h2 { color: #A8C7FA; font-size: 18px; margin-bottom: 14px; }
+  .guidelines ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .guidelines li { color: #CAC4D0; font-size: 13px; line-height: 1.5; padding-left: 24px; position: relative; }
+  .guidelines li::before { content: '\2705'; position: absolute; left: 0; }
+
+  .concept { background: #1C1B1F; border-radius: 20px; padding: 40px; margin-bottom: 40px; border: 1px solid #2B2930; }
+  .concept-header { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .concept-number { background: #A8C7FA; color: #003258; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 15px; }
+  .concept-title { font-size: 22px; font-weight: 700; color: #E6E1E5; }
+  .concept-desc { color: #CAC4D0; font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+
+  .assets { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; }
+  .asset-group { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .asset-label { font-size: 12px; color: #79747E; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+  .asset-spec { font-size: 10px; color: #504d56; margin-top: -4px; }
+
+  /* Icon (512x512 rendered at 160x160) */
+  .icon-wrap { position: relative; }
+  .icon { width: 160px; height: 160px; border-radius: 36px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  /* Adaptive icon safe-zone indicator */
+  .safe-zone { position: absolute; width: 106px; height: 106px; border: 1px dashed rgba(255,255,255,0.12); border-radius: 50%; pointer-events: none; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  /* Banner (320x180 — Google TV spec) */
+  .banner { width: 320px; height: 180px; border-radius: 4px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+
+  /* ══════════════════════════════════════════
+     CONCEPT 1 — Database Lens
+     Uses: surface_bg, hero gradient, primary, secondary(teal), tertiary glow
+     ══════════════════════════════════════════ */
+  .c1-icon {
+    background: linear-gradient(135deg, #0E0E12 0%, #1A2744 50%, #162237 100%);
+    box-shadow: 0 8px 32px rgba(168,199,250,0.2);
+    border: 1px solid rgba(168,199,250,0.08);
+  }
+  .c1-icon .db-shape { width: 66px; height: 76px; position: relative; }
+  .c1-icon .db-top { width: 66px; height: 20px; background: linear-gradient(135deg, #A8C7FA, #7FCFCF); border-radius: 50%; position: absolute; top: 0; z-index: 3; }
+  .c1-icon .db-body {
+    width: 66px; height: 56px; background: linear-gradient(180deg, #A8C7FA 0%, #004A77 50%, #1A2744 100%);
+    border-radius: 0 0 50% 50% / 0 0 20px 20px; position: absolute; top: 10px;
+    border-left: 2px solid rgba(168,199,250,0.15); border-right: 2px solid rgba(168,199,250,0.15);
+    border-bottom: 2px solid rgba(168,199,250,0.15);
+  }
+  .c1-icon .db-ring1 { width: 66px; height: 0; border-top: 2px solid rgba(127,207,207,0.3); position: absolute; top: 30px; z-index: 2; border-radius: 50%; }
+  .c1-icon .db-ring2 { width: 66px; height: 0; border-top: 2px solid rgba(127,207,207,0.2); position: absolute; top: 45px; z-index: 2; border-radius: 50%; }
+  .c1-icon .lens { position: absolute; right: 8px; bottom: 8px; width: 38px; height: 38px; border: 4px solid #7FCFCF; border-radius: 50%; z-index: 4; background: rgba(127,207,207,0.06); }
+  .c1-icon .lens-handle { position: absolute; right: 2px; bottom: 0; width: 5px; height: 16px; background: #7FCFCF; border-radius: 3px; transform: rotate(-45deg); z-index: 4; }
+  /* Gold sparkle accent */
+  .c1-icon .gold-dot { position: absolute; top: 18px; left: 18px; width: 8px; height: 8px; background: #EFBD6B; border-radius: 50%; z-index: 5; box-shadow: 0 0 12px rgba(239,189,107,0.5); }
+
+  .c1-banner { background: linear-gradient(135deg, #0E0E12 0%, #1A2744 45%, #0E1A2E 100%); border: 1px solid rgba(168,199,250,0.06); }
+  .c1-banner .inner { display: flex; align-items: center; gap: 20px; padding: 0 28px; }
+  .c1-banner .brand-icon { width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #A8C7FA, #7FCFCF); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .c1-banner .brand-icon .tv-box { width: 26px; height: 18px; border: 2.5px solid #0E0E12; border-radius: 4px; position: relative; }
+  .c1-banner .brand-icon .tv-stand { width: 14px; height: 2.5px; background: #0E0E12; border-radius: 1px; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); }
+  .c1-banner .text { display: flex; flex-direction: column; gap: 6px; }
+  .c1-banner .text .name { font-size: 24px; font-weight: 800; color: #E6E1E5; letter-spacing: -0.01em; }
+  .c1-banner .text .tag { font-size: 14px; color: #7FCFCF; font-weight: 500; }
+
+  /* ══════════════════════════════════════════
+     CONCEPT 2 — Grid & Signal
+     Uses: actual surface palette (#1C1B1F → #211F26 → #302D38), all 3 accents
+     ══════════════════════════════════════════ */
+  .c2-icon {
+    background: linear-gradient(150deg, #0E0E12 0%, #1C1B1F 40%, #211F26 100%);
+    box-shadow: 0 8px 32px rgba(127,207,207,0.15);
+    border: 1px solid rgba(168,199,250,0.06);
+  }
+  .c2-icon .grid-bg { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: repeat(4,1fr); gap: 2px; padding: 28px; opacity: 0.07; }
+  .c2-icon .grid-bg span { background: #A8C7FA; border-radius: 3px; }
+  .c2-icon .tv-frame-icon { width: 80px; height: 56px; border: 3px solid #A8C7FA; border-radius: 10px; position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; background: #0E0E12; }
+  .c2-icon .tv-stand-icon { width: 34px; height: 3px; background: linear-gradient(90deg, #A8C7FA, #7FCFCF); border-radius: 2px; position: absolute; bottom: 28px; z-index: 2; }
+  .c2-icon .signal { position: absolute; top: 20px; right: 20px; z-index: 3; display: flex; align-items: flex-end; gap: 3px; }
+  .c2-icon .signal span { width: 5px; background: #7FCFCF; border-radius: 2px; }
+  .c2-icon .signal span:nth-child(1) { height: 8px; opacity: 0.5; }
+  .c2-icon .signal span:nth-child(2) { height: 14px; opacity: 0.7; }
+  .c2-icon .signal span:nth-child(3) { height: 20px; }
+  .c2-icon .data-rows { display: flex; flex-direction: column; gap: 4px; }
+  .c2-icon .data-rows span { display: block; height: 3px; border-radius: 1px; }
+  .c2-icon .data-rows span:nth-child(1) { width: 38px; background: #EFBD6B; }
+  .c2-icon .data-rows span:nth-child(2) { width: 30px; background: #A8C7FA; opacity: 0.7; }
+  .c2-icon .data-rows span:nth-child(3) { width: 34px; background: #7FCFCF; opacity: 0.5; }
+
+  .c2-banner { background: linear-gradient(135deg, #0E0E12 0%, #1C1B1F 50%, #0E0E12 100%); border: 1px solid rgba(168,199,250,0.06); }
+  .c2-banner .inner { display: flex; align-items: center; gap: 20px; padding: 0 28px; }
+  .c2-banner .tv-graphic { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+  .c2-banner .tv-graphic .frame { width: 64px; height: 44px; border: 2.5px solid #A8C7FA; border-radius: 7px; display: flex; align-items: center; justify-content: center; background: rgba(14,14,18,0.8); }
+  .c2-banner .tv-graphic .stand { width: 28px; height: 3px; background: linear-gradient(90deg, #A8C7FA, #7FCFCF); border-radius: 2px; margin-top: 4px; }
+  .c2-banner .tv-graphic .rows { display: flex; flex-direction: column; gap: 3px; }
+  .c2-banner .tv-graphic .rows span { height: 2.5px; border-radius: 1px; }
+  .c2-banner .tv-graphic .rows span:nth-child(1) { width: 32px; background: #EFBD6B; }
+  .c2-banner .tv-graphic .rows span:nth-child(2) { width: 26px; background: #A8C7FA; opacity: 0.6; }
+  .c2-banner .tv-graphic .rows span:nth-child(3) { width: 30px; background: #7FCFCF; opacity: 0.4; }
+  .c2-banner .text { display: flex; flex-direction: column; gap: 6px; }
+  .c2-banner .text .name { font-size: 22px; font-weight: 800; color: #E6E1E5; }
+  .c2-banner .text .tag { font-size: 14px; color: #A8C7FA; font-weight: 500; }
+
+  /* ══════════════════════════════════════════
+     CONCEPT 3 — Neon Table
+     Uses: surface_bg + hero_start glow, all 3 accents prominently
+     ══════════════════════════════════════════ */
+  .c3-icon {
+    background: radial-gradient(circle at 30% 30%, #211F26 0%, #0E0E12 70%);
+    box-shadow: 0 8px 32px rgba(239,189,107,0.12);
+    border: 1px solid rgba(168,199,250,0.06);
+  }
+  .c3-icon .glow { position: absolute; width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, rgba(26,39,68,0.5) 0%, transparent 70%); top: 10px; left: 10px; }
+  .c3-icon .table-graphic { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 0; }
+  .c3-icon .table-graphic .th { display: flex; gap: 5px; margin-bottom: 5px; }
+  .c3-icon .table-graphic .th span { width: 22px; height: 7px; background: #EFBD6B; border-radius: 2px; }
+  .c3-icon .table-graphic .tr { display: flex; gap: 5px; margin-bottom: 4px; }
+  .c3-icon .table-graphic .tr span { height: 5px; border-radius: 2px; }
+  .c3-icon .table-graphic .tr span:nth-child(1) { width: 16px; background: #A8C7FA; }
+  .c3-icon .table-graphic .tr span:nth-child(2) { width: 24px; background: #7FCFCF; opacity: 0.6; }
+  .c3-icon .table-graphic .tr span:nth-child(3) { width: 20px; background: rgba(168,199,250,0.25); }
+  .c3-icon .table-graphic .tr.dim span { opacity: 0.4; }
+  .c3-icon .tv-glyph { position: absolute; top: 14px; right: 14px; z-index: 3; display: flex; flex-direction: column; align-items: center; }
+  .c3-icon .tv-glyph .tv-box { width: 24px; height: 18px; border: 2.5px solid #A8C7FA; border-radius: 4px; }
+  .c3-icon .tv-glyph .tv-base { width: 14px; height: 2.5px; background: linear-gradient(90deg, #A8C7FA, #7FCFCF); border-radius: 1px; margin-top: 2px; }
+  .c3-icon .bracket-l { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 60px; color: #302D38; opacity: 0.3; font-weight: 100; z-index: 1; font-family: monospace; }
+  .c3-icon .bracket-r { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 60px; color: #302D38; opacity: 0.3; font-weight: 100; z-index: 1; font-family: monospace; }
+
+  .c3-banner { background: linear-gradient(135deg, #0E0E12 0%, #1C1B1F 50%, #0E0E12 100%); border: 1px solid rgba(168,199,250,0.06); }
+  .c3-banner .inner { display: flex; align-items: center; gap: 24px; padding: 0 32px; width: 100%; }
+  .c3-banner .table-art { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
+  .c3-banner .table-art .th { display: flex; gap: 3px; }
+  .c3-banner .table-art .th span { width: 18px; height: 5px; background: #EFBD6B; border-radius: 2px; }
+  .c3-banner .table-art .tr { display: flex; gap: 3px; }
+  .c3-banner .table-art .tr span { height: 4px; border-radius: 1px; }
+  .c3-banner .table-art .tr span:nth-child(1) { width: 14px; background: #A8C7FA; }
+  .c3-banner .table-art .tr span:nth-child(2) { width: 20px; background: #7FCFCF; opacity: 0.5; }
+  .c3-banner .table-art .tr span:nth-child(3) { width: 16px; background: rgba(168,199,250,0.2); }
+  .c3-banner .text { display: flex; flex-direction: column; gap: 6px; }
+  .c3-banner .text .name { font-size: 22px; font-weight: 800; color: #EFBD6B; }
+  .c3-banner .text .tag { font-size: 14px; color: #CAC4D0; font-weight: 500; }
+
+  /* ══════════════════════════════════════════
+     CONCEPT 4 — Minimal Mono
+     Uses: blue→teal app logo gradient as bg, dark surface screen, all 3 accents
+     ══════════════════════════════════════════ */
+  .c4-icon {
+    background: linear-gradient(135deg, #A8C7FA 0%, #7FCFCF 100%);
+    box-shadow: 0 8px 32px rgba(168,199,250,0.3);
+  }
+  .c4-icon .screen {
+    width: 76px; height: 54px; background: #0E0E12; border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 5px; padding: 10px; position: relative; z-index: 2;
+    box-shadow: 0 4px 16px rgba(14,14,18,0.4);
+  }
+  .c4-icon .screen-stand { width: 30px; height: 3px; background: #0E0E12; border-radius: 2px; position: absolute; z-index: 2; margin-top: 60px; }
+  .c4-icon .screen .row { display: flex; gap: 4px; width: 100%; }
+  .c4-icon .screen .row span { height: 4px; border-radius: 1px; flex: 1; }
+  .c4-icon .screen .row span:nth-child(1) { background: #A8C7FA; }
+  .c4-icon .screen .row span:nth-child(2) { background: #7FCFCF; }
+  .c4-icon .screen .row span:nth-child(3) { background: rgba(168,199,250,0.4); }
+  .c4-icon .screen .row.hdr span { height: 5px; background: #EFBD6B; }
+  .c4-icon .screen .row.dim span { opacity: 0.35; }
+  .c4-icon .corner-tl { position: absolute; top: 18px; left: 18px; width: 18px; height: 18px; border-top: 3px solid rgba(14,14,18,0.15); border-left: 3px solid rgba(14,14,18,0.15); border-radius: 4px 0 0 0; }
+  .c4-icon .corner-br { position: absolute; bottom: 18px; right: 18px; width: 18px; height: 18px; border-bottom: 3px solid rgba(14,14,18,0.15); border-right: 3px solid rgba(14,14,18,0.15); border-radius: 0 0 4px 0; }
+
+  .c4-banner { background: linear-gradient(135deg, #A8C7FA 0%, #7FCFCF 100%); }
+  .c4-banner .inner { display: flex; align-items: center; justify-content: center; gap: 20px; padding: 0 32px; }
+  .c4-banner .screen-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; }
+  .c4-banner .mini-screen { width: 52px; height: 38px; background: #0E0E12; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 7px; box-shadow: 0 2px 8px rgba(14,14,18,0.3); }
+  .c4-banner .mini-screen-stand { width: 22px; height: 2px; background: #0E0E12; border-radius: 1px; margin-top: 3px; }
+  .c4-banner .mini-screen .r { display: flex; gap: 2px; width: 100%; }
+  .c4-banner .mini-screen .r span { height: 3px; border-radius: 1px; flex: 1; }
+  .c4-banner .mini-screen .r span:nth-child(1) { background: #EFBD6B; }
+  .c4-banner .mini-screen .r span:nth-child(2) { background: #A8C7FA; opacity: 0.7; }
+  .c4-banner .mini-screen .r span:nth-child(3) { background: #7FCFCF; opacity: 0.5; }
+  .c4-banner .text { display: flex; flex-direction: column; gap: 4px; }
+  .c4-banner .text .name { font-size: 24px; font-weight: 800; color: #0E0E12; letter-spacing: -0.01em; }
+  .c4-banner .text .tag { font-size: 14px; color: rgba(14,14,18,0.5); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h1>TvProvider Browser — Icon &amp; Banner Concepts</h1>
+<p class="subtitle">Updated to match app theme &amp; Google TV design guidelines</p>
+
+<div class="theme-ref">
+  <h2>App Theme Color Reference</h2>
+  <div class="swatches">
+    <div class="swatch"><div class="dot" style="background:#0E0E12;"></div><div class="label">Surface BG<br>#0E0E12</div></div>
+    <div class="swatch"><div class="dot" style="background:#1C1B1F;"></div><div class="label">Container<br>#1C1B1F</div></div>
+    <div class="swatch"><div class="dot" style="background:#211F26;"></div><div class="label">Card<br>#211F26</div></div>
+    <div class="swatch"><div class="dot" style="background:#302D38;"></div><div class="label">Elevated<br>#302D38</div></div>
+    <div class="swatch"><div class="dot" style="background:#A8C7FA;"></div><div class="label">Primary<br>#A8C7FA</div></div>
+    <div class="swatch"><div class="dot" style="background:#7FCFCF;"></div><div class="label">Secondary<br>#7FCFCF</div></div>
+    <div class="swatch"><div class="dot" style="background:#EFBD6B;"></div><div class="label">Tertiary<br>#EFBD6B</div></div>
+    <div class="swatch"><div class="dot" style="background:linear-gradient(135deg,#1A2744,#0E1A2E);"></div><div class="label">Hero<br>#1A2744</div></div>
+    <div class="swatch"><div class="dot" style="background:linear-gradient(135deg,#A8C7FA,#7FCFCF);"></div><div class="label">App Logo<br>Blue→Teal</div></div>
+  </div>
+</div>
+
+<div class="guidelines">
+  <h2>Google TV / Android TV Compliance Checklist</h2>
+  <ul>
+    <li><strong>Banner: 320x180 dp</strong> (export at xhdpi = 640x360 px) — fully opaque, no transparency</li>
+    <li><strong>App name prominently displayed</strong> on banner — readable from 10-foot viewing distance</li>
+    <li><strong>No emoji</strong> — replaced with vector/CSS shapes for consistent rendering across all TV devices</li>
+    <li><strong>10-foot UI text sizing</strong> — tagline at 14sp min, app name at 22sp+ on banner</li>
+    <li><strong>Minimal clutter</strong> — max 2 visual elements (icon graphic + text) per banner</li>
+    <li><strong>High contrast</strong> — text/background contrast ratio at least 4.5:1 (WCAG AA)</li>
+    <li><strong>Adaptive icon safe zone</strong> — key artwork within 66% center circle (shown as dashed ring)</li>
+    <li><strong>Icon: 512x512 px</strong> for Play Store — works inside circle, squircle, and rounded-rect masks</li>
+    <li><strong>Colors match app theme</strong> — purple-tinted dark surfaces, blue→teal logo gradient, 3-color accents</li>
+  </ul>
+</div>
+
+<!-- CONCEPT 1 -->
+<div class="concept">
+  <div class="concept-header">
+    <div class="concept-number">1</div>
+    <div class="concept-title">Database Lens</div>
+  </div>
+  <p class="concept-desc">
+    Database cylinder + magnifying glass on the app's hero gradient (#1A2744 → #162237).<br>
+    DB cap uses the app logo gradient (blue→teal). Gold sparkle accent. Teal magnifying glass.
+  </p>
+  <div class="assets">
+    <div class="asset-group">
+      <div class="asset-label">App Icon</div>
+      <div class="asset-spec">512x512 px · Adaptive-icon ready</div>
+      <div class="icon-wrap">
+        <div class="icon c1-icon">
+          <div class="gold-dot"></div>
+          <div class="db-shape">
+            <div class="db-top"></div>
+            <div class="db-body"></div>
+            <div class="db-ring1"></div>
+            <div class="db-ring2"></div>
+          </div>
+          <div class="lens"></div>
+          <div class="lens-handle"></div>
+        </div>
+        <div class="safe-zone"></div>
+      </div>
+    </div>
+    <div class="asset-group">
+      <div class="asset-label">TV Banner</div>
+      <div class="asset-spec">320x180 dp · Opaque · 10-ft readable</div>
+      <div class="banner c1-banner">
+        <div class="inner">
+          <div class="brand-icon">
+            <div style="position:relative;display:flex;align-items:center;justify-content:center;">
+              <div class="tv-box"></div>
+              <div class="tv-stand"></div>
+            </div>
+          </div>
+          <div class="text">
+            <div class="name">TvProvider Browser</div>
+            <div class="tag">tv.db Inspector</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 2 -->
+<div class="concept">
+  <div class="concept-header">
+    <div class="concept-number">2</div>
+    <div class="concept-title">Grid &amp; Signal</div>
+  </div>
+  <p class="concept-desc">
+    TV monitor on the app's actual surface palette (#0E0E12 → #1C1B1F → #211F26).<br>
+    Gold header row, blue data, teal signal bars &amp; stand gradient. All 3 accent colors present.
+  </p>
+  <div class="assets">
+    <div class="asset-group">
+      <div class="asset-label">App Icon</div>
+      <div class="asset-spec">512x512 px · Adaptive-icon ready</div>
+      <div class="icon-wrap">
+        <div class="icon c2-icon">
+          <div class="grid-bg"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="tv-frame-icon">
+            <div class="data-rows"><span></span><span></span><span></span></div>
+          </div>
+          <div class="tv-stand-icon"></div>
+          <div class="signal"><span></span><span></span><span></span></div>
+        </div>
+        <div class="safe-zone"></div>
+      </div>
+    </div>
+    <div class="asset-group">
+      <div class="asset-label">TV Banner</div>
+      <div class="asset-spec">320x180 dp · Opaque · 10-ft readable</div>
+      <div class="banner c2-banner">
+        <div class="inner">
+          <div class="tv-graphic">
+            <div class="frame">
+              <div class="rows"><span></span><span></span><span></span></div>
+            </div>
+            <div class="stand"></div>
+          </div>
+          <div class="text">
+            <div class="name">TvProvider Browser</div>
+            <div class="tag">Android TV Database Viewer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 3 -->
+<div class="concept">
+  <div class="concept-header">
+    <div class="concept-number">3</div>
+    <div class="concept-title">Neon Table</div>
+  </div>
+  <p class="concept-desc">
+    Data grid on app's surface_bg (#0E0E12) with card-toned glow (#211F26).<br>
+    Gold headers, blue + teal data rows, vector TV with blue→teal stand. Brackets in surface_elevated tone.
+  </p>
+  <div class="assets">
+    <div class="asset-group">
+      <div class="asset-label">App Icon</div>
+      <div class="asset-spec">512x512 px · Adaptive-icon ready</div>
+      <div class="icon-wrap">
+        <div class="icon c3-icon">
+          <div class="glow"></div>
+          <span class="bracket-l">{</span>
+          <span class="bracket-r">}</span>
+          <div class="tv-glyph">
+            <div class="tv-box"></div>
+            <div class="tv-base"></div>
+          </div>
+          <div class="table-graphic">
+            <div class="th"><span></span><span></span><span></span></div>
+            <div class="tr"><span></span><span></span><span></span></div>
+            <div class="tr"><span></span><span></span><span></span></div>
+            <div class="tr dim"><span></span><span></span><span></span></div>
+            <div class="tr dim"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+        <div class="safe-zone"></div>
+      </div>
+    </div>
+    <div class="asset-group">
+      <div class="asset-label">TV Banner</div>
+      <div class="asset-spec">320x180 dp · Opaque · 10-ft readable</div>
+      <div class="banner c3-banner">
+        <div class="inner">
+          <div class="table-art">
+            <div class="th"><span></span><span></span><span></span></div>
+            <div class="tr"><span></span><span></span><span></span></div>
+            <div class="tr"><span></span><span></span><span></span></div>
+            <div class="tr"><span></span><span></span><span></span></div>
+          </div>
+          <div class="text">
+            <div class="name">TvProvider Browser</div>
+            <div class="tag">Inspect every table in tv.db</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT 4 -->
+<div class="concept">
+  <div class="concept-header">
+    <div class="concept-number">4</div>
+    <div class="concept-title">Minimal Mono</div>
+  </div>
+  <p class="concept-desc">
+    App logo gradient (blue #A8C7FA → teal #7FCFCF) as background — matches bg_app_logo.xml exactly.<br>
+    Dark surface_bg screen with gold header + blue/teal data. Corner brackets in subtle dark tone.
+  </p>
+  <div class="assets">
+    <div class="asset-group">
+      <div class="asset-label">App Icon</div>
+      <div class="asset-spec">512x512 px · Adaptive-icon ready</div>
+      <div class="icon-wrap">
+        <div class="icon c4-icon">
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <div class="screen">
+            <div class="row hdr"><span></span><span></span><span></span></div>
+            <div class="row"><span></span><span></span><span></span></div>
+            <div class="row"><span></span><span></span><span></span></div>
+            <div class="row dim"><span></span><span></span><span></span></div>
+          </div>
+          <div class="screen-stand"></div>
+        </div>
+        <div class="safe-zone"></div>
+      </div>
+    </div>
+    <div class="asset-group">
+      <div class="asset-label">TV Banner</div>
+      <div class="asset-spec">320x180 dp · Opaque · 10-ft readable</div>
+      <div class="banner c4-banner">
+        <div class="inner">
+          <div class="screen-wrap">
+            <div class="mini-screen">
+              <div class="r"><span></span><span></span><span></span></div>
+              <div class="r"><span></span><span></span><span></span></div>
+              <div class="r"><span></span><span></span><span></span></div>
+            </div>
+            <div class="mini-screen-stand"></div>
+          </div>
+          <div class="text">
+            <div class="name">TvProvider Browser</div>
+            <div class="tag">TV Database Inspector</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+

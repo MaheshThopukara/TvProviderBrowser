@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180"
+    tools:ignore="VectorRaster">
+
+    <!-- Background: surface_bg -->
+    <path
+        android:fillColor="#0E0E12"
+        android:pathData="M0,0h320v180H0z" />
+    <path
+        android:fillColor="#1C1B1F"
+        android:fillAlpha="0.4"
+        android:pathData="M100,0h220v180H100z" />
+
+    <!-- Border -->
+    <path
+        android:strokeColor="#A8C7FA"
+        android:strokeAlpha="0.06"
+        android:strokeWidth="1"
+        android:fillColor="#00000000"
+        android:pathData="M0.5,0.5h319v179H0.5z" />
+
+    <!-- ═══ TV Monitor (left side, centered vertically) ═══ -->
+    <!-- Frame outer -->
+    <path
+        android:fillColor="#A8C7FA"
+        android:pathData="M36,44h80c4,0 4,4 4,4v56c0,4 -4,4 -4,4H36c-4,0 -4,-4 -4,-4V48c0,-4 4,-4 4,-4z" />
+    <!-- Screen inner -->
+    <path
+        android:fillColor="#0E0E12"
+        android:pathData="M38,48h76c2,0 2,2 2,2v48c0,2 -2,2 -2,2H38c-2,0 -2,-2 -2,-2V50c0,-2 2,-2 2,-2z" />
+    <!-- Gold header row -->
+    <path android:fillColor="#EFBD6B"
+        android:pathData="M42,56h38c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+    <!-- Blue data row -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.65"
+        android:pathData="M42,64h30c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+    <!-- Teal data row -->
+    <path android:fillColor="#7FCFCF" android:fillAlpha="0.45"
+        android:pathData="M42,72h34c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+    <!-- Dim data row -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.2"
+        android:pathData="M42,80h24c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+    <!-- Dim data row 2 -->
+    <path android:fillColor="#7FCFCF" android:fillAlpha="0.12"
+        android:pathData="M42,88h28c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+
+    <!-- TV Stand -->
+    <path android:fillColor="#A8C7FA"
+        android:pathData="M60,110h16c1.5,0 1.5,1 1.5,1v2c0,1 -1.5,1 -1.5,1H60c-1.5,0 -1.5,-1 -1.5,-1v-2c0,-1 1.5,-1 1.5,-1z" />
+    <path android:fillColor="#7FCFCF" android:fillAlpha="0.5"
+        android:pathData="M68,110h16c1.5,0 1.5,1 1.5,1v2c0,1 -1.5,1 -1.5,1H68c-1.5,0 -1.5,-1 -1.5,-1v-2c0,-1 1.5,-1 1.5,-1z" />
+
+    <!-- ═══ Text area (right side) — app name rendered as styled bars ═══ -->
+    <!-- "TvProvider" line (large, white) -->
+    <path android:fillColor="#E6E1E5"
+        android:pathData="M148,65h132c2,0 2,2 2,2v6c0,2 -2,2 -2,2H148c-2,0 -2,-2 -2,-2v-6c0,-2 2,-2 2,-2z" />
+    <!-- "Browser" line (large, white) -->
+    <path android:fillColor="#E6E1E5"
+        android:pathData="M148,80h90c2,0 2,2 2,2v6c0,2 -2,2 -2,2H148c-2,0 -2,-2 -2,-2v-6c0,-2 2,-2 2,-2z" />
+    <!-- Tagline line (blue accent) -->
+    <path android:fillColor="#A8C7FA" android:fillAlpha="0.5"
+        android:pathData="M148,97h100c1,0 1,1 1,1v2c0,1 -1,1 -1,1H148c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+    <!-- Tagline line 2 (teal) -->
+    <path android:fillColor="#7FCFCF" android:fillAlpha="0.3"
+        android:pathData="M148,104h70c1,0 1,1 1,1v2c0,1 -1,1 -1,1H148c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+</vector>
+
