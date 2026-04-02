@@ -7,42 +7,45 @@
 
     <!--
         Grid & Signal icon foreground
-        Safe zone: center 72dp (x: 18–90, y: 18–90)
-        TV frame centered at ~54,52
+        108×108 canvas, center = (54, 54)
+        Safe zone: 18–90 (72dp)
+        TV frame+stand: 64w × 44h → centered at (54, 54)
+        Frame: x=22..86, y=32..72 (center 54,52)
+        Stand: y=73..76 (center x=54)
+        Signal bars: inside frame area (top-right of screen)
     -->
 
     <!-- TV Monitor Frame: blue #A8C7FA border, dark #0E0E12 fill -->
-    <!-- Outer frame (rounded rect) -->
     <path
         android:fillColor="#A8C7FA"
         android:pathData="M26,32 L82,32 Q86,32 86,36 L86,68 Q86,72 82,72 L26,72 Q22,72 22,68 L22,36 Q22,32 26,32 Z" />
-    <!-- Inner screen (dark fill, inset by 3dp for border effect) -->
+    <!-- Inner screen (dark fill, 3dp inset) -->
     <path
         android:fillColor="#0E0E12"
         android:pathData="M28,35 L80,35 Q83,35 83,38 L83,66 Q83,69 80,69 L28,69 Q25,69 25,66 L25,38 Q25,35 28,35 Z" />
 
-    <!-- Data rows inside screen -->
+    <!-- Data rows inside screen (left-aligned) -->
     <!-- Row 1: Gold header #EFBD6B -->
     <path
         android:fillColor="#EFBD6B"
-        android:pathData="M30,42 h28 a1.5,1.5 0 0,1 0,3 h-28 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,41 h24 a1.5,1.5 0 0,1 0,3 h-24 a1.5,1.5 0 0,1 0,-3 Z" />
     <!-- Row 2: Blue #A8C7FA -->
     <path
         android:fillColor="#A8C7FA"
         android:fillAlpha="0.7"
-        android:pathData="M30,48 h22 a1.5,1.5 0 0,1 0,3 h-22 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,47 h18 a1.5,1.5 0 0,1 0,3 h-18 a1.5,1.5 0 0,1 0,-3 Z" />
     <!-- Row 3: Teal #7FCFCF -->
     <path
         android:fillColor="#7FCFCF"
         android:fillAlpha="0.5"
-        android:pathData="M30,54 h25 a1.5,1.5 0 0,1 0,3 h-25 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,53 h21 a1.5,1.5 0 0,1 0,3 h-21 a1.5,1.5 0 0,1 0,-3 Z" />
     <!-- Row 4: Blue dim -->
     <path
         android:fillColor="#A8C7FA"
         android:fillAlpha="0.3"
-        android:pathData="M30,60 h18 a1.5,1.5 0 0,1 0,3 h-18 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,59 h15 a1.5,1.5 0 0,1 0,3 h-15 a1.5,1.5 0 0,1 0,-3 Z" />
 
-    <!-- TV Stand: blue→teal gradient approximated with two rects -->
+    <!-- TV Stand: centered at x=54, y=73..76 -->
     <path
         android:fillColor="#A8C7FA"
         android:pathData="M42,73 h12 a1.5,1.5 0 0,1 0,3 h-12 a1.5,1.5 0 0,1 0,-3 Z" />
@@ -51,21 +54,21 @@
         android:fillAlpha="0.5"
         android:pathData="M48,73 h12 a1.5,1.5 0 0,1 0,3 h-12 a1.5,1.5 0 0,1 0,-3 Z" />
 
-    <!-- Signal bars (top-right, teal #7FCFCF) -->
+    <!-- Signal bars (inside screen, top-right corner) -->
     <!-- Bar 1 (shortest, 50% opacity) -->
     <path
         android:fillColor="#7FCFCF"
         android:fillAlpha="0.5"
-        android:pathData="M70,36 h3 a1,1 0 0,1 0,6 h-3 a1,1 0 0,1 0,-6 Z" />
+        android:pathData="M67,55 h3 a1,1 0 0,1 0,7 h-3 a1,1 0 0,1 0,-7 Z" />
     <!-- Bar 2 (medium, 70% opacity) -->
     <path
         android:fillColor="#7FCFCF"
         android:fillAlpha="0.7"
-        android:pathData="M74.5,32 h3 a1,1 0 0,1 0,10 h-3 a1,1 0 0,1 0,-10 Z" />
+        android:pathData="M72,50 h3 a1,1 0 0,1 0,12 h-3 a1,1 0 0,1 0,-12 Z" />
     <!-- Bar 3 (tallest, full) -->
     <path
         android:fillColor="#7FCFCF"
-        android:pathData="M79,27 h3 a1,1 0 0,1 0,15 h-3 a1,1 0 0,1 0,-15 Z" />
+        android:pathData="M77,44 h3 a1,1 0 0,1 0,18 h-3 a1,1 0 0,1 0,-18 Z" />
 
 </vector>
 

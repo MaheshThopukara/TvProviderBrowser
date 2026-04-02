@@ -19,39 +19,39 @@
     <!-- Subtle 4x4 grid backdrop (inside safe zone area, ~7% opacity blue) -->
     <!-- Row 1 -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M28,28h11v11H28z" />
+        android:pathData="M29,29h11v11H29z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M41,28h11v11H41z" />
+        android:pathData="M42,29h11v11H42z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M54,28h11v11H54z" />
+        android:pathData="M55,29h11v11H55z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M67,28h11v11H67z" />
+        android:pathData="M68,29h11v11H68z" />
     <!-- Row 2 -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M28,41h11v11H28z" />
+        android:pathData="M29,42h11v11H29z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M41,41h11v11H41z" />
+        android:pathData="M42,42h11v11H42z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M54,41h11v11H54z" />
+        android:pathData="M55,42h11v11H55z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M67,41h11v11H67z" />
+        android:pathData="M68,42h11v11H68z" />
     <!-- Row 3 -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M28,54h11v11H28z" />
+        android:pathData="M29,55h11v11H29z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M41,54h11v11H41z" />
+        android:pathData="M42,55h11v11H42z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M54,54h11v11H54z" />
+        android:pathData="M55,55h11v11H55z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M67,54h11v11H67z" />
+        android:pathData="M68,55h11v11H68z" />
     <!-- Row 4 -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M28,67h11v11H28z" />
+        android:pathData="M29,68h11v11H29z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M41,67h11v11H41z" />
+        android:pathData="M42,68h11v11H42z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M54,67h11v11H54z" />
+        android:pathData="M55,68h11v11H55z" />
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.07"
-        android:pathData="M67,67h11v11H67z" />
+        android:pathData="M68,68h11v11H68z" />
 </vector>
 

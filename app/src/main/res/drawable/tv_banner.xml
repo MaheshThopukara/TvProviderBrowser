@@ -7,6 +7,13 @@
     android:viewportHeight="180"
     tools:ignore="VectorRaster">
 
+    <!--
+        TV Banner: Grid & Signal — 320×180 viewport, center = (160, 90)
+        Left zone (x 0–140, center x=70): TV graphic
+        Right zone (x 148–310): Text bars
+        Everything vertically centered at y=90
+    -->
+
     <!-- Background: surface_bg -->
     <path
         android:fillColor="#0E0E12"
@@ -14,7 +21,7 @@
     <path
         android:fillColor="#1C1B1F"
         android:fillAlpha="0.4"
-        android:pathData="M100,0h220v180H100z" />
+        android:pathData="M100,0h220v180H0z" />
 
     <!-- Border -->
     <path
@@ -24,49 +31,54 @@
         android:fillColor="#00000000"
         android:pathData="M0.5,0.5h319v179H0.5z" />
 
-    <!-- ═══ TV Monitor (left side, centered vertically) ═══ -->
-    <!-- Frame outer -->
+    <!-- ═══ TV Monitor — centered in left zone ═══ -->
+    <!-- Frame: 80w × 60h, centered at (70, 86) → x=30..110, y=56..116 -->
+    <!-- Frame outer (blue border) -->
     <path
         android:fillColor="#A8C7FA"
-        android:pathData="M36,44h80c4,0 4,4 4,4v56c0,4 -4,4 -4,4H36c-4,0 -4,-4 -4,-4V48c0,-4 4,-4 4,-4z" />
-    <!-- Screen inner -->
+        android:pathData="M34,56 L106,56 Q110,56 110,60 L110,112 Q110,116 106,116 L34,116 Q30,116 30,112 L30,60 Q30,56 34,56 Z" />
+    <!-- Screen inner (dark fill, 3dp inset) -->
     <path
         android:fillColor="#0E0E12"
-        android:pathData="M38,48h76c2,0 2,2 2,2v48c0,2 -2,2 -2,2H38c-2,0 -2,-2 -2,-2V50c0,-2 2,-2 2,-2z" />
-    <!-- Gold header row -->
+        android:pathData="M36,59 L104,59 Q107,59 107,62 L107,110 Q107,113 104,113 L36,113 Q33,113 33,110 L33,62 Q33,59 36,59 Z" />
+
+    <!-- Data rows inside screen -->
+    <!-- Gold header -->
     <path android:fillColor="#EFBD6B"
-        android:pathData="M42,56h38c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
-    <!-- Blue data row -->
+        android:pathData="M38,66h36c1,0 1,1.5 1,1.5v2c0,1.5 -1,1.5 -1,1.5H38c-1,0 -1,-1.5 -1,-1.5v-2c0,-1.5 1,-1.5 1,-1.5z" />
+    <!-- Blue data -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.65"
-        android:pathData="M42,64h30c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
-    <!-- Teal data row -->
+        android:pathData="M38,75h28c1,0 1,1.5 1,1.5v2c0,1.5 -1,1.5 -1,1.5H38c-1,0 -1,-1.5 -1,-1.5v-2c0,-1.5 1,-1.5 1,-1.5z" />
+    <!-- Teal data -->
     <path android:fillColor="#7FCFCF" android:fillAlpha="0.45"
-        android:pathData="M42,72h34c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
-    <!-- Dim data row -->
+        android:pathData="M38,84h32c1,0 1,1.5 1,1.5v2c0,1.5 -1,1.5 -1,1.5H38c-1,0 -1,-1.5 -1,-1.5v-2c0,-1.5 1,-1.5 1,-1.5z" />
+    <!-- Dim blue -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.2"
-        android:pathData="M42,80h24c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
-    <!-- Dim data row 2 -->
+        android:pathData="M38,93h22c1,0 1,1.5 1,1.5v2c0,1.5 -1,1.5 -1,1.5H38c-1,0 -1,-1.5 -1,-1.5v-2c0,-1.5 1,-1.5 1,-1.5z" />
+    <!-- Dim teal -->
     <path android:fillColor="#7FCFCF" android:fillAlpha="0.12"
-        android:pathData="M42,88h28c1,0 1,1 1,1v2c0,1 -1,1 -1,1H42c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+        android:pathData="M38,102h26c1,0 1,1.5 1,1.5v2c0,1.5 -1,1.5 -1,1.5H38c-1,0 -1,-1.5 -1,-1.5v-2c0,-1.5 1,-1.5 1,-1.5z" />
 
-    <!-- TV Stand -->
+    <!-- TV Stand: centered under frame at x=70, y=120..124 -->
     <path android:fillColor="#A8C7FA"
-        android:pathData="M60,110h16c1.5,0 1.5,1 1.5,1v2c0,1 -1.5,1 -1.5,1H60c-1.5,0 -1.5,-1 -1.5,-1v-2c0,-1 1.5,-1 1.5,-1z" />
+        android:pathData="M54,120h16c1.5,0 1.5,1.5 1.5,1.5v1c0,1.5 -1.5,1.5 -1.5,1.5H54c-1.5,0 -1.5,-1.5 -1.5,-1.5v-1c0,-1.5 1.5,-1.5 1.5,-1.5z" />
     <path android:fillColor="#7FCFCF" android:fillAlpha="0.5"
-        android:pathData="M68,110h16c1.5,0 1.5,1 1.5,1v2c0,1 -1.5,1 -1.5,1H68c-1.5,0 -1.5,-1 -1.5,-1v-2c0,-1 1.5,-1 1.5,-1z" />
+        android:pathData="M70,120h16c1.5,0 1.5,1.5 1.5,1.5v1c0,1.5 -1.5,1.5 -1.5,1.5H70c-1.5,0 -1.5,-1.5 -1.5,-1.5v-1c0,-1.5 1.5,-1.5 1.5,-1.5z" />
 
-    <!-- ═══ Text area (right side) — app name rendered as styled bars ═══ -->
-    <!-- "TvProvider" line (large, white) -->
+    <!-- ═══ Text bars — centered vertically in right zone ═══ -->
+    <!-- Block: 10+5+10+8+4+4+4 = 45dp tall → starts at y=(180-45)/2 = 68 -->
+
+    <!-- "TvProvider" (large white bar) y=68..78 -->
     <path android:fillColor="#E6E1E5"
-        android:pathData="M148,65h132c2,0 2,2 2,2v6c0,2 -2,2 -2,2H148c-2,0 -2,-2 -2,-2v-6c0,-2 2,-2 2,-2z" />
-    <!-- "Browser" line (large, white) -->
+        android:pathData="M148,68h130c2,0 2,2 2,2v6c0,2 -2,2 -2,2H148c-2,0 -2,-2 -2,-2v-6c0,-2 2,-2 2,-2z" />
+    <!-- "Browser" (large white bar) y=83..93 -->
     <path android:fillColor="#E6E1E5"
-        android:pathData="M148,80h90c2,0 2,2 2,2v6c0,2 -2,2 -2,2H148c-2,0 -2,-2 -2,-2v-6c0,-2 2,-2 2,-2z" />
-    <!-- Tagline line (blue accent) -->
+        android:pathData="M148,83h88c2,0 2,2 2,2v6c0,2 -2,2 -2,2H148c-2,0 -2,-2 -2,-2v-6c0,-2 2,-2 2,-2z" />
+    <!-- Tagline (blue accent) y=101..105 -->
     <path android:fillColor="#A8C7FA" android:fillAlpha="0.5"
-        android:pathData="M148,97h100c1,0 1,1 1,1v2c0,1 -1,1 -1,1H148c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
-    <!-- Tagline line 2 (teal) -->
+        android:pathData="M148,101h100c1,0 1,1 1,1v2c0,1 -1,1 -1,1H148c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+    <!-- Tagline 2 (teal) y=109..113 -->
     <path android:fillColor="#7FCFCF" android:fillAlpha="0.3"
-        android:pathData="M148,104h70c1,0 1,1 1,1v2c0,1 -1,1 -1,1H148c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
+        android:pathData="M148,109h70c1,0 1,1 1,1v2c0,1 -1,1 -1,1H148c-1,0 -1,-1 -1,-1v-2c0,-1 1,-1 1,-1z" />
 </vector>
 

@@ -5,7 +5,9 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Monochrome version of the Grid & Signal icon (for themed icons on Android 13+) -->
+    <!-- Monochrome version of the Grid & Signal icon (for themed icons on Android 13+)
+         Matches foreground: frame x=22..86, y=32..72, stand y=73..76
+         Signal bars inside screen area -->
 
     <!-- TV Monitor Frame -->
     <path
@@ -16,26 +18,26 @@
         android:fillColor="#FFFFFF"
         android:pathData="M28,35 L80,35 Q83,35 83,38 L83,66 Q83,69 80,69 L28,69 Q25,69 25,66 L25,38 Q25,35 28,35 Z" />
 
-    <!-- Data rows -->
+    <!-- Data rows (matching foreground positions) -->
     <path android:fillColor="#000000"
-        android:pathData="M30,42 h28 a1.5,1.5 0 0,1 0,3 h-28 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,41 h24 a1.5,1.5 0 0,1 0,3 h-24 a1.5,1.5 0 0,1 0,-3 Z" />
     <path android:fillColor="#000000" android:fillAlpha="0.6"
-        android:pathData="M30,48 h22 a1.5,1.5 0 0,1 0,3 h-22 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,47 h18 a1.5,1.5 0 0,1 0,3 h-18 a1.5,1.5 0 0,1 0,-3 Z" />
     <path android:fillColor="#000000" android:fillAlpha="0.4"
-        android:pathData="M30,54 h25 a1.5,1.5 0 0,1 0,3 h-25 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,53 h21 a1.5,1.5 0 0,1 0,3 h-21 a1.5,1.5 0 0,1 0,-3 Z" />
     <path android:fillColor="#000000" android:fillAlpha="0.2"
-        android:pathData="M30,60 h18 a1.5,1.5 0 0,1 0,3 h-18 a1.5,1.5 0 0,1 0,-3 Z" />
+        android:pathData="M30,59 h15 a1.5,1.5 0 0,1 0,3 h-15 a1.5,1.5 0 0,1 0,-3 Z" />
 
     <!-- TV Stand -->
     <path android:fillColor="#000000"
         android:pathData="M42,73 h24 a1.5,1.5 0 0,1 0,3 h-24 a1.5,1.5 0 0,1 0,-3 Z" />
 
-    <!-- Signal bars -->
+    <!-- Signal bars (inside screen, top-right) -->
     <path android:fillColor="#000000" android:fillAlpha="0.5"
-        android:pathData="M70,36 h3 a1,1 0 0,1 0,6 h-3 a1,1 0 0,1 0,-6 Z" />
+        android:pathData="M67,55 h3 a1,1 0 0,1 0,7 h-3 a1,1 0 0,1 0,-7 Z" />
     <path android:fillColor="#000000" android:fillAlpha="0.7"
-        android:pathData="M74.5,32 h3 a1,1 0 0,1 0,10 h-3 a1,1 0 0,1 0,-10 Z" />
+        android:pathData="M72,50 h3 a1,1 0 0,1 0,12 h-3 a1,1 0 0,1 0,-12 Z" />
     <path android:fillColor="#000000"
-        android:pathData="M79,27 h3 a1,1 0 0,1 0,15 h-3 a1,1 0 0,1 0,-15 Z" />
+        android:pathData="M77,44 h3 a1,1 0 0,1 0,18 h-3 a1,1 0 0,1 0,-18 Z" />
 </vector>
 
