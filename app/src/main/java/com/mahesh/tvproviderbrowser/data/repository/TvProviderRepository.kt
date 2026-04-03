@@ -73,6 +73,36 @@ class TvProviderRepository @Inject constructor(
         )
     }
 
+    /**
+     * Queries ALL rows from the given [uri] (no pagination).
+     * Used for CSV export.
+     */
+    suspend fun queryAllRows(
+        uri: Uri,
+        dbColumnOrder: List<String> = emptyList(),
+    ): TableResult = withContext(Dispatchers.IO) {
+        val rows = mutableListOf<List<String?>>()
+        var columns = emptyList<String>()
+
+        val cursor = contentResolver.query(
+            uri, null, null, null,
+            "${BaseColumns._ID} ASC",
+        )
+
+        cursor?.use { c ->
+            columns = (0 until c.columnCount).map { c.getColumnName(it) }
+            while (c.moveToNext()) {
+                rows.add(readRow(c))
+            }
+        }
+
+        reorderByDbColumnOrder(
+            columns = columns,
+            rows = rows,
+            dbColumnOrder = dbColumnOrder,
+        )
+    }
+
     suspend fun queryTotalCount(uri: Uri): Int = withContext(Dispatchers.IO) {
         contentResolver.query(uri, arrayOf(BaseColumns._ID), null, null, null)?.use { cursor ->
             cursor.count

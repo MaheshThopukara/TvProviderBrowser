@@ -4,14 +4,14 @@
         <shape android:shape="oval">
             <solid android:color="@color/surface_card_hover" />
             <stroke android:width="2dp" android:color="@color/focus_ring" />
-            <size android:width="48dp" android:height="48dp" />
+            <size android:width="44dp" android:height="44dp" />
         </shape>
     </item>
     <item>
         <shape android:shape="oval">
             <solid android:color="@color/surface_elevated" />
             <stroke android:width="2dp" android:color="@android:color/transparent" />
-            <size android:width="48dp" android:height="48dp" />
+            <size android:width="44dp" android:height="44dp" />
         </shape>
     </item>
 </selector>

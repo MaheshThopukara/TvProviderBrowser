@@ -16,6 +16,14 @@
             app:exitAnim="@anim/nav_exit"
             app:popEnterAnim="@anim/nav_pop_enter"
             app:popExitAnim="@anim/nav_pop_exit" />
+
+        <action
+            android:id="@+id/action_home_to_export"
+            app:destination="@id/exportProgressFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
     </fragment>
 
     <fragment
@@ -26,6 +34,29 @@
         <argument
             android:name="tableId"
             app:argType="string" />
+
+        <action
+            android:id="@+id/action_tableData_to_export"
+            app:destination="@id/exportProgressFragment"
+            app:enterAnim="@anim/nav_enter"
+            app:exitAnim="@anim/nav_exit"
+            app:popEnterAnim="@anim/nav_pop_enter"
+            app:popExitAnim="@anim/nav_pop_exit" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exportProgressFragment"
+        android:name="com.mahesh.tvproviderbrowser.ui.export.ExportProgressFragment"
+        android:label="Export">
+
+        <argument
+            android:name="exportMode"
+            app:argType="string" />
+
+        <argument
+            android:name="tableId"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 
 </navigation>

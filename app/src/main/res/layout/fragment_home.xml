@@ -167,6 +167,15 @@
                     android:text="tv.db Inspector"
                     android:textColor="@color/on_surface_dim"
                     android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/exportAllButton"
+                    style="@style/TvIconButton"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="20dp"
+                    android:text="📤"
+                    android:focusable="true" />
             </LinearLayout>
         </LinearLayout>
 

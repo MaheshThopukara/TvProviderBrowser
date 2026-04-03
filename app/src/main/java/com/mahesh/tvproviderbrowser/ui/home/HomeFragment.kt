@@ -38,6 +38,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var tableCardsRow: LinearLayout
     private lateinit var grantPermissionButton: Button
     private lateinit var statDbSizeValue: TextView
+    private lateinit var exportAllButton: Button
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -52,9 +53,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         tableCardsRow = view.findViewById(R.id.tableCardsRow)
         grantPermissionButton = view.findViewById(R.id.grantPermissionButton)
         statDbSizeValue = view.findViewById(R.id.statDbSizeValue)
+        exportAllButton = view.findViewById(R.id.exportAllButton)
 
         grantPermissionButton.setOnClickListener {
             permissionLauncher.launch(READ_TV_LISTINGS)
+        }
+
+        exportAllButton.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeToExport(exportMode = "all")
+            findNavController().navigate(action)
         }
 
         buildTableCards()

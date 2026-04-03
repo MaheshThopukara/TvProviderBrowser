@@ -67,6 +67,7 @@ class TableDataFragment : Fragment(R.layout.fragment_table_data) {
     private lateinit var detailBody: LinearLayout
     private lateinit var detailCloseBtn: Button
     private lateinit var detailScrollView: ScrollView
+    private lateinit var exportButton: Button
 
     private var loadingPulse: ObjectAnimator? = null
 
@@ -236,6 +237,16 @@ class TableDataFragment : Fragment(R.layout.fragment_table_data) {
         detailBody = view.findViewById(R.id.detailBody)
         detailCloseBtn = view.findViewById(R.id.detailCloseBtn)
         detailScrollView = view.findViewById(R.id.detailScrollView)
+
+        // Export button
+        exportButton = view.findViewById(R.id.exportButton)
+        exportButton.setOnClickListener {
+            val action = TableDataFragmentDirections.actionTableDataToExport(
+                exportMode = "single",
+                tableId = viewModel.table.id,
+            )
+            findNavController().navigate(action)
+        }
     }
 
     private fun setupScreen(view: View) {

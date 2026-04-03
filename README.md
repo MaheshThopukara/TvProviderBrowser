@@ -17,6 +17,7 @@ A developer-focused Android TV app that lets you browse and inspect every table 
 | **Row detail panel** | Click any row to open a slide-in panel showing every column/value pair |
 | **Storage estimates** | Per-table data size and total `tv.db` file size (when accessible) |
 | **TV-first UI** | Full D-pad / remote navigation, focus management, and Leanback-optimized layout |
+| **CSV export** | Export single tables or all tables to CSV — choose Downloads, App Files, or USB/SD storage with a dedicated progress screen showing the exact output path |
 | **Dark theme** | Purpose-built dark color scheme for big-screen readability |
 | **Runtime permission** | Requests `READ_TV_LISTINGS` on launch; gracefully shows a permission gate |
 | **BLOB & null handling** | BLOBs displayed as `BLOB(n bytes)`, nulls styled in italic |
@@ -33,6 +34,10 @@ A developer-focused Android TV app that lets you browse and inspect every table 
 |---|---|
 | ![Detail](docs/play-store-assets/RowDetails.png) | ![Watched](docs/play-store-assets/WatchedProgramsView.png) |
 
+| Export Screen |
+|---|
+| ![Export](docs/play-store-assets/ExportScreen.png) |
+
 ---
 
 ## 🏗️ Architecture
@@ -41,13 +46,14 @@ A developer-focused Android TV app that lets you browse and inspect every table 
 TvProviderBrowserApp          ← Hilt Application
 └── MainActivity              ← Single-activity host (NavHost)
     ├── HomeFragment          ← Table cards + permission gate
-    └── TableDataFragment     ← Paged grid, detail overlay
+    ├── TableDataFragment     ← Paged grid, detail overlay
+    └── ExportProgressFragment ← Storage picker, progress & result
 ```
 
 | Layer | Stack |
 |---|---|
 | **UI** | Android Views + Fragments, Navigation Component, Leanback `VerticalGridView` |
-| **Pattern** | MVVM — `HomeViewModel`, `TableDataViewModel` |
+| **Pattern** | MVVM — `HomeViewModel`, `TableDataViewModel`, `ExportProgressViewModel` |
 | **DI** | Hilt (`@AndroidEntryPoint`, `@Singleton` repository) |
 | **Data** | `TvProviderRepository` queries tables via `ContentResolver` with client-side paging |
 
@@ -142,6 +148,10 @@ app/src/main/java/com/mahesh/tvproviderbrowser/
 ├── TvProviderBrowserApp.kt          # Hilt Application class
 ├── MainActivity.kt                  # Single-activity NavHost
 ├── data/
+│   ├── export/
+│   │   ├── CsvExporter.kt          # Single-table CSV writer (RFC 4180)
+│   │   ├── CsvAllTablesExporter.kt  # Multi-table CSV writer
+│   │   └── ExportFileWriter.kt      # Downloads / MediaStore / file-path writer
 │   ├── model/
 │   │   ├── TvTable.kt              # Table data class
 │   │   ├── TvTables.kt             # All 6 table definitions + column orders
@@ -153,6 +163,10 @@ app/src/main/java/com/mahesh/tvproviderbrowser/
 └── ui/
     ├── components/
     │   └── DataTableView.kt         # LeanbackTableView (custom grid widget)
+    ├── export/
+    │   ├── ExportLocationPickerFragment.kt  # Storage location chooser dialog
+    │   ├── ExportProgressFragment.kt        # Export progress & result screen
+    │   └── ExportProgressViewModel.kt       # Export state machine & IO
     ├── home/
     │   ├── HomeFragment.kt          # Table card list + permission gate
     │   └── HomeViewModel.kt         # Home screen state

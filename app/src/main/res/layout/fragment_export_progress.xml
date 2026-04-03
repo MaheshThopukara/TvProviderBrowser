@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_bg">
+
+    <!-- Centered Export Card -->
+    <LinearLayout
+        android:id="@+id/exportCard"
+        android:layout_width="600dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_permission_card"
+        android:elevation="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="64dp"
+        android:paddingVertical="48dp">
+
+        <!-- Status Icon -->
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_stat_icon_blue">
+
+            <TextView
+                android:id="@+id/exportIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="📤"
+                android:textSize="36sp" />
+        </FrameLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/exportTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Export Data"
+            android:textColor="@color/on_surface"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <!-- Subtitle (table name or "all tables") -->
+        <TextView
+            android:id="@+id/exportSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/on_surface_dim"
+            android:textSize="14sp" />
+
+        <!-- Status Message -->
+        <TextView
+            android:id="@+id/exportStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.3"
+            android:text="Choose where to save the file"
+            android:textColor="@color/on_surface_variant"
+            android:textSize="16sp" />
+
+        <!-- Progress Spinner -->
+        <ProgressBar
+            android:id="@+id/exportProgress"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+        <!-- File Path Container (shown on success) -->
+        <LinearLayout
+            android:id="@+id/pathContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📁 Saved to:"
+                android:textColor="@color/on_surface_dim"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/exportFilePath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_code_inline"
+                android:fontFamily="monospace"
+                android:maxLines="3"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/secondary"
+                android:textIsSelectable="false"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/exportRowCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <!-- Choose Location button (shown in ChoosingLocation state) -->
+            <Button
+                android:id="@+id/exportChooseButton"
+                style="@style/TvPrimaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:text="📂  Choose Location"
+                android:visibility="gone" />
+
+            <!-- Done / Back button (shown on success or error) -->
+            <Button
+                android:id="@+id/exportDoneButton"
+                style="@style/TvPrimaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:text="✅  Done"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
+
